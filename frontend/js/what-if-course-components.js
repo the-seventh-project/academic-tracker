@@ -83,7 +83,10 @@ window.onload = async () => {
 };
 
 // Historical Data Functions
-const API_URL = 'http://127.0.0.1:5000';
+// Use localhost for development, otherwise use the production URL
+const API_URL = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')
+    ? 'http://127.0.0.1:5000'
+    : 'https://academic-tracker-1mot.onrender.com';
 
 async function getHistoricalData() {
     // Try to fetch from API first
