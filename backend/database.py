@@ -1,8 +1,12 @@
 import sqlite3
 
+import os
+
 def get_db_connection():
     """Create database connection with Row factory"""
-    conn = sqlite3.connect('gpa_calculator.db')
+    # Use absolute path for database file
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gpa_calculator.db')
+    conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
 

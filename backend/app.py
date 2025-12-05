@@ -1,5 +1,11 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import sys
+import os
+
+# Add the directory containing this file to the Python path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from database import query_db, execute_db
 import requests
 import sqlite3
