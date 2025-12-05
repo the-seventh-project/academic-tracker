@@ -2,7 +2,7 @@
 // IMPORTANT: Replace 'https://your-render-app-name.onrender.com' with your actual Render URL after deploying the backend
 const API_URL = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')
     ? 'http://127.0.0.1:5000'
-    : 'https://your-render-app-name.onrender.com';
+    : 'https://academic-tracker-1mot.onrender.com';
 
 // Handle login form submission
 document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
