@@ -1,0 +1,971 @@
+:root {
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --primary-color: #bb86fc;
+    --secondary-color: #03dac6;
+    --accent-color: #cf6679;
+    --input-bg: #2c2c2c;
+    --border-color: #333;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.card-header {
+    background: linear-gradient(45deg, #3a1c71, #d76d77, #ffaf7b);
+    color: white;
+    border-bottom: none;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #6200ea, #bb86fc);
+    border: none;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #3700b3, #6200ea);
+}
+
+.form-control,
+.form-select {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--input-bg);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(187, 134, 252, 0.25);
+}
+
+/* Links in dark mode */
+a {
+    color: #03dac6;
+}
+
+a:hover {
+    color: #bb86fc;
+}
+
+/* Fix Login Page Links */
+.text-center a,
+.text-center small {
+    color: #03dac6 !important;
+}
+
+.text-center p {
+    color: #e0e0e0 !important;
+}
+
+/* Glassmorphism for specific elements */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    background: -webkit-linear-gradient(45deg, #bb86fc, #03dac6);
+    background: linear-gradient(45deg, #bb86fc, #03dac6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Alerts */
+.alert-info {
+    background-color: rgba(3, 218, 198, 0.1);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.alert-danger {
+    background-color: rgba(207, 102, 121, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+/* Modal */
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+/* Fix text visibility */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+span,
+div {
+    color: var(--text-color);
+}
+
+.card-header h2,
+.card-header h4,
+.card-header p {
+    color: white !important;
+}
+
+/* Form Labels */
+.form-label {
+    color: #bb86fc !important;
+    /* Light purple for labels */
+    font-weight: 500;
+}
+
+/* Gradient text utility for specific labels (uses background-clip trick) */
+.gradient-label {
+    background: linear-gradient(45deg, #bb86fc, #03dac6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    font-weight: 600;
+}
+
+/* Alternate gradient used for the forgot-password intro text */
+.gradient-accent {
+    background: linear-gradient(90deg, rgba(134, 42, 155, 1) 0%, rgba(92, 192, 242, 1) 50%, rgba(230, 228, 223, 1) 99%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    font-weight: 600;
+}
+
+/* Input Placeholders */
+::placeholder {
+    color: #888 !important;
+    opacity: 1;
+}
+
+/* Table Headers */
+.table thead th {
+    color: #03dac6 !important;
+    /* Teal for headers */
+    border-bottom: 2px solid #333;
+}
+
+/* Fix Table Rows on White Background */
+.table {
+    background-color: white !important;
+    color: black !important;
+    border-radius: 5px;
+}
+
+.table td {
+    color: black !important;
+    font-weight: 500;
+}
+
+.table-hover tbody tr:hover {
+    color: black !important;
+    background-color: #f2f2f2 !important;
+}
+
+/* Specific fixes for dashboard cards */
+#semesterGPA,
+#cumulativeGPA {
+    color: #03dac6 !important;
+    /* Bright teal for GPA numbers */
+    text-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
+}
+
+/* GPA Card Labels */
+.card-body h5 {
+    color: white !important;
+}
+
+/* Fix for "Add Assessment" button text */
+.btn-light {
+    background: #e0e0e0;
+    color: #121212;
+    border: none;
+}
+
+.btn-light:hover {
+    background: white;
+}
+
+/* Modal Title */
+.modal-title {
+    color: var(--text-color);
+}
+
+/* Course Details specific */
+#courseCredits,
+#courseSemester,
+.my-courses-card {
+    /* match other cards on the page */
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+.my-courses-card .card-header,
+.my-courses-card .card-header * {
+    color: #fff !important;
+}
+
+.my-courses-card .table {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border: none !important;
+}
+
+.my-courses-card .table thead,
+.my-courses-card .table tbody,
+.my-courses-card .table tr,
+.my-courses-card .table td,
+.my-courses-card .table th {
+    background-color: transparent !important;
+    /* allow card-bg to show through */
+}
+
+.my-courses-card .table th,
+.my-courses-card .table td {
+    color: var(--text-color) !important;
+    text-align: center;
+    vertical-align: middle;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.my-courses-card .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.my-courses-card .btn-light {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Ensure the What-If table inside cards uses dark styling (overrides .table white rule) */
+.card #whatIfTable,
+.card #whatIfTable thead,
+.card #whatIfTable tbody,
+.card #whatIfTable tr,
+.card #whatIfTable td,
+.card #whatIfTable th {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.card #whatIfTable th,
+.card #whatIfTable td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+/* Inputs inside the what-if table should use the dark input background and readable text */
+.card #whatIfTable input.form-control {
+    background-color: var(--input-bg) !important;
+    color: var(--text-color) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.card #whatIfTable input.form-control:disabled {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    opacity: 1 !important;
+}
+
+/* Fill Edit and Delete buttons inside the assessments table
+   - Edit: solid blue gradient
+   - Delete: solid red gradient
+   These rules are scoped to .course-assessments-table so other outline buttons remain unchanged. */
+.course-assessments-table .btn-outline-primary {
+    background: linear-gradient(90deg, #2563eb, #60a5fa) !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.course-assessments-table .btn-outline-primary:hover {
+    filter: brightness(0.95);
+}
+
+.course-assessments-table .btn-outline-danger {
+    background: linear-gradient(90deg, #dc2626, #f43f5e) !important;
+    color: #fff !important;
+    border: none !important;
+}
+
+.course-assessments-table .btn-outline-danger:hover {
+    filter: brightness(0.95);
+}
+
+/* Override global white table for tables inside card containers: use dark card background */
+.card .table,
+.card .table thead,
+.card .table tbody,
+.card .table tr,
+.card .table td,
+.card .table th {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.card .table-hover tbody tr:hover,
+.card .table.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: var(--text-color) !important;
+}
+
+/* Make Edit/Add buttons on course-detail match the Add Course button in student main page */
+.course-detail-page .btn-light {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.course-detail-page .btn-light:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Course detail: make assessments table match card background and center text */
+/* More specific selectors and using --card-bg ensure this overrides Bootstrap's .table rules */
+.card .course-assessments-table,
+.card .course-assessments-table thead,
+.card .course-assessments-table tbody,
+.card .course-assessments-table tr,
+.card .course-assessments-table td,
+.card .course-assessments-table th {
+    background-color: var(--card-bg) !important;
+    color: var(--text-color) !important;
+    border: none !important;
+}
+
+.card .course-assessments-table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card .course-assessments-table thead th,
+.card .course-assessments-table td,
+.card .course-assessments-table th {
+    color: var(--text-color) !important;
+    text-align: center;
+    vertical-align: middle;
+    border-color: rgba(255, 255, 255, 0.04) !important;
+    background-color: transparent !important;
+    /* let the table element color show */
+}
+
+/* Subtle dark hover for assessments rows (match student main dashboard) */
+.card .course-assessments-table.table-hover tbody tr:hover,
+.course-assessments-table.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+    color: var(--text-color) !important;
+}
+
+/* Placeholder for non-editable actions */
+.placeholder-action {
+    color: var(--text-color) !important;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+/* Center course meta values */
+.course-meta .col-md-4 {
+    text-align: center;
+}
+
+/* Bubble style for toggle edit button (transparent) */
+.bubble-btn {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-color) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    padding: .25rem .6rem;
+    box-shadow: none;
+}
+
+.bubble-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+}
+
+.bubble-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+/* Utility class to pull small buttons closer to the header/form */
+.buttons-close {
+    margin-top: -10px !important;
+}
+
+/* Slightly reduced card header spacing when using compact layout */
+.card-header.compact {
+    padding-top: .4rem;
+    padding-bottom: .35rem;
+}
+
+/* Slightly reduced card body vertical padding for compact layout */
+.card-body.compact {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+/* Control card max-width by CSS (desktop) and expand it on narrower viewports so text stays one-line.
+   Removing the inline max-width from HTML allows these rules to work consistently. */
+
+.card.shadow.mx-auto {
+    max-width: 420px;
+    /* desktop default */
+}
+
+/* Admin overview centering and width */
+.admin-overview {
+    max-width: 980px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Center table headers and values inside Admin Overview */
+.admin-overview .table th,
+.admin-overview .table td {
+    text-align: center !important;
+    vertical-align: middle !important;
+    color: var(--text-color) !important;
+}
+
+@media (max-width: 768px) {
+
+    /* Make the column full-width inside the centered row */
+    .row.justify-content-center .col-md-5,
+    .col-md-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    /* Let the card grow to most of the viewport so the two buttons can remain side-by-side
+       and long labels (like 'Forgot Password?') don't break into two lines. */
+    .card.shadow.mx-auto {
+        max-width: none !important;
+        width: 92%;
+        margin: 0 4%;
+        border-radius: 12px;
+    }
+
+    /* Slightly increase internal spacing for touch targets and reduce button padding so labels fit */
+    .card-body {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .bubble-btn {
+        padding: .25rem .5rem;
+        font-size: .9rem;
+        margin-top: .5rem;
+    }
+}
+
+/* Make the card header taller and keep its text centered without changing text size */
+.card-header.text-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 90px;
+    /* increase header container height */
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+/* Ensure subtitle spacing remains moderate while not changing its font-size */
+.card-header.text-center p {
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+}
+
+/* Main dashboard specific styles */
+.gradient-nav {
+    background: linear-gradient(90deg, #3a1c71, #d76d77, #ffaf7b) !important;
+    color: #fff !important;
+}
+
+.gradient-nav .navbar-brand,
+.gradient-nav .navbar-text,
+.gradient-nav .btn {
+    color: #fff !important;
+}
+
+.container {
+    flex: 1;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: calc(100vh - 140px);
+    /* leave room for header/footer */
+    padding-top: 2rem;
+}
+
+.features-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+/* Ensure the three main feature cards on the dashboard use a black container
+   while preserving gradient title and hover effects. */
+.features-row .feature-card {
+    /* gradient edge via outer background; inner panel is the card-body */
+    background: linear-gradient(135deg, #6200ea, #03dac6) !important;
+    padding: 3px;
+    /* border thickness — adjust to control edge width */
+    border-radius: 14px;
+    color: #fff !important;
+}
+
+.features-row .feature-card .card-body {
+    background: #000 !important;
+    /* inner panel color */
+    border-radius: 11px;
+    /* slightly smaller than outer radius */
+    color: #fff !important;
+    padding: 2rem;
+}
+
+.feature-card {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.feature-card .card-body {
+    background: linear-gradient(135deg, #6200ea, #03dac6);
+    color: #fff !important;
+    font-weight: 700;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.feature-card .card-title,
+.feature-card .card-text {
+    color: #fff !important;
+}
+
+.gradient-feature-title {
+    background: linear-gradient(45deg, #ffffff, rgba(255, 255, 255, 0.85));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 900;
+}
+
+.gradient-footer {
+    background: linear-gradient(90deg, #3a1c71, #d76d77) !important;
+    color: #fff !important;
+    padding: 12px 0;
+}
+
+/* Page footer: center text and ensure full-width alignment */
+footer {
+    text-align: center;
+    width: 100%;
+    padding: 14px 0;
+    color: #fff !important;
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
+
+/* Make the feature titles (Student/GPA/Course) use a colored gradient text */
+.gradient-feature-title {
+    background: linear-gradient(45deg, #bb86fc, #03dac6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    font-weight: 900;
+}
+
+/* Per-card margin helpers (adjust by changing the class or overriding --feature-margin) */
+.feature-student {
+    --feature-margin: 0.35rem;
+}
+
+.feature-gpa {
+    --feature-margin: 0.5rem;
+}
+
+.feature-course {
+    --feature-margin: 0.75rem;
+}
+
+/* Override: make Student/GPA/Course dashboard feature cards black by default,
+   apply gradient when highlighted (hover/focus), and give header text a gradient. */
+.features-container .feature-card {
+    background: #000 !important;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+    transition: background 0.25s ease, transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.features-container .feature-card h2 {
+    margin: 0 0 0.75rem 0;
+    background: linear-gradient(45deg, #bb86fc, #03dac6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    font-weight: 800;
+}
+
+.features-container .feature-card p {
+    color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.features-container .feature-card:hover,
+.features-container .feature-card:focus {
+    background: linear-gradient(135deg, #6200ea, #03dac6) !important;
+    box-shadow: 0 10px 40px rgba(80, 34, 180, 0.35) !important;
+    transform: translateY(-6px);
+}
+
+/* Ensure links inside feature cards remain white on non-gradient state */
+.features-container .feature-card a,
+.features-container .feature-card .btn {
+    color: inherit;
+}
+
+/* Accessible hover/highlight for Student/GPA/Course feature cards
+     - shows a gradient edge on hover while keeping inner panel black
+     - keeps text highly readable
+     - provides per-card margin helpers
+*/
+.features-row .feature-card {
+    display: block;
+    border-radius: 14px;
+    padding: 3px;
+    /* outer edge thickness when not hovered; reduce to 0 if you want no visible edge */
+    background: linear-gradient(135deg, #6200ea, #03dac6);
+    box-sizing: border-box;
+    transition: all .22s ease;
+    text-decoration: none;
+    overflow: visible;
+}
+
+.features-row .feature-card .card-body {
+    background: #000;
+    /* inner panel */
+    border-radius: 11px;
+    padding: 1.5rem;
+    color: #fff;
+}
+
+.features-row .feature-card .card-text {
+    color: #e6e6e6;
+    /* lighter body copy for contrast */
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.gradient-feature-title {
+    background: linear-gradient(90deg, #bb86fc, #20d0b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+}
+
+/* Hover/focus: brighten edge and add lift while keeping inner panel black */
+.features-row .feature-card:hover,
+.features-row .feature-card:focus {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(90deg, #7b61ff 0%, #00f0c6 100%);
+}
+
+.features-row .feature-card:hover .card-body,
+.features-row .feature-card:focus .card-body {
+    background: #000;
+    /* preserve inner black panel for legibility */
+}
+
+/* keyboard focus ring */
+.features-row .feature-card:focus {
+    outline: 3px solid rgba(123, 97, 255, 0.14);
+    outline-offset: 4px;
+}
+
+/* Margin helper classes (use on the anchor/link) */
+.feature-student {
+    margin: 0 0.75rem 0 0;
+}
+
+.feature-gpa {
+    margin: 0 0.75rem 0 0;
+}
+
+.feature-course {
+    margin: 0 0 0 0.75rem;
+}
+
+/* Responsive fixes: keep feature cards consistent on narrower screens */
+@media (max-width: 992px) {
+    .features-row {
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .features-row .feature-card {
+        flex: 1 1 calc(50% - 1rem);
+        max-width: calc(50% - 1rem);
+        margin: 0;
+    }
+
+    .features-row .feature-card .card-body {
+        min-height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .features-row .feature-card {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* My Courses: match page card/container color, white text, centered values */
+.my-courses-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+.my-courses-card .card-header,
+.my-courses-card .card-header * {
+    color: #fff !important;
+}
+
+.my-courses-card .table {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border: none !important;
+}
+
+.my-courses-card .table thead,
+.my-courses-card .table tbody,
+.my-courses-card .table tr,
+.my-courses-card .table td,
+.my-courses-card .table th {
+    background-color: transparent !important;
+}
+
+.my-courses-card .table th,
+.my-courses-card .table td {
+    color: var(--text-color) !important;
+    text-align: center;
+    vertical-align: middle;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.my-courses-card .table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.my-courses-card .btn-light {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Hide number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Course Forecast button hover effect - orange */
+a[href="what-if-course-components.html"]:hover {
+    background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(255, 140, 0, 0.3);
+}
+
+/* Assessment Type Selector - Orange gradient dropdown */
+#assessmentTypeSelector {
+    background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px rgba(255, 140, 0, 0.3);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+#assessmentTypeSelector:hover {
+    box-shadow: 0 6px 12px rgba(255, 140, 0, 0.4);
+    transform: translateY(-2px);
+}
+
+#assessmentTypeSelector:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.3) !important;
+}
+
+#assessmentTypeSelector option {
+    background-color: #2c2c2c !important;
+    color: white !important;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+#assessmentTypeSelector option:hover {
+    background-color: #3a3a3a !important;
+}
+
+#assessmentTypeSelector option:checked {
+    background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+    color: white !important;
+}
+
+/* What-If Mode Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #28a745;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #28a745;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.toggle-label {
+    color: white;
+    font-weight: 500;
+    user-select: none;
+}
+
+/* Predicted Score Styling */
+.predicted-score {
+    font-style: italic;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    border-color: #6c757d;
+}
+
+.predicted-score::placeholder {
+    font-style: italic;
+}
