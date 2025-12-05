@@ -1,4 +1,8 @@
-const API_URL = 'http://127.0.0.1:5000';
+// Use localhost for development, otherwise use the production URL
+// IMPORTANT: Replace 'https://your-render-app-name.onrender.com' with your actual Render URL after deploying the backend
+const API_URL = (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost')
+    ? 'http://127.0.0.1:5000'
+    : 'https://your-render-app-name.onrender.com';
 
 // Handle login form submission
 document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
