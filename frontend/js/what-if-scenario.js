@@ -7,7 +7,7 @@ let courses = []; // {course_id?, course_code, course_name, credit_hours, curren
 window.onload = async () => {
     const userData = localStorage.getItem('user');
     if (!userData) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
     currentUser = JSON.parse(userData);
@@ -16,7 +16,7 @@ window.onload = async () => {
     userId = currentUser.id ?? currentUser.user_id ?? currentUser.userId ?? null;
     if (!userId) {
         console.error('Unable to determine user id from stored user:', currentUser);
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
 

@@ -4,7 +4,7 @@ window.onload = async () => {
     // Check if user is logged in
     const userData = localStorage.getItem('user');
     if (!userData) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
 

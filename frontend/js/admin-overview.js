@@ -3,7 +3,7 @@ const API_URL = 'http://127.0.0.1:5000';
 window.onload = async () => {
     const userData = localStorage.getItem('user');
     if (!userData) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
     const user = JSON.parse(userData);

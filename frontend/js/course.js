@@ -4,7 +4,7 @@ let currentUser = null;
 window.onload = () => {
     const userData = localStorage.getItem('user');
     if (!userData) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
     currentUser = JSON.parse(userData);

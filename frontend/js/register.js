@@ -20,7 +20,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
         if (data.success) {
             showSuccess('Account created successfully! Redirecting to login...');
             setTimeout(() => {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }, 2000);
         } else {
             showError(data.message || 'Registration failed');

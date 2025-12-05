@@ -18,7 +18,7 @@ document.getElementById('resetForm').addEventListener('submit', async (e) => {
         if (data.success) {
             showSuccess('Password updated successfully! Redirecting to login...');
             setTimeout(() => {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }, 2000);
         } else {
             showError(data.message || 'Failed to reset password');

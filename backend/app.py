@@ -9,9 +9,25 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from database import query_db, execute_db
 import requests
 import sqlite3
+import create_database  # Import the creation script
 
 app = Flask(__name__)
 CORS(app)  # Allow frontend to call backend
+
+# Auto-initialize database if tables are missing
+try:
+    with app.app_context():
+        # Check if USER table exists
+        conn = sqlite3.connect(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'gpa_calculator.db'))
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='USER'")
+        if not cursor.fetchone():
+            print("Database not initialized. Running creation script...")
+            create_database.create_tables()
+            print("Database initialized successfully.")
+        conn.close()
+except Exception as e:
+    print(f"Error initializing database: {e}")
 
 
 @app.route('/', methods=['GET'])

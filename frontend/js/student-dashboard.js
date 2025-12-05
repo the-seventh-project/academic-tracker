@@ -8,7 +8,7 @@ let assessmentTypeTrendChartInstance = null; // store chart instance for updates
 window.onload = async () => {
     const userData = localStorage.getItem('user');
     if (!userData) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
 
@@ -403,7 +403,7 @@ function viewCourse(courseId) {
 
 function logout() {
     localStorage.removeItem('user');
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
 }
 
 // ============ ASSESSMENT TYPE TREND CHART ============
