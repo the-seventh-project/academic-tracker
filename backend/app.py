@@ -11,11 +11,18 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-from .routes import register_blueprints
-from .config import config
+import sys
+import os
+
+# Add the directory containing this file to the Python path for robust imports
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from routes import register_blueprints
+from config import config
 
 app = Flask(__name__)
-CORS(app, origins=config.ALLOWED_ORIGINS)
+# Permissive CORS for production stability
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 
 @app.route('/', methods=['GET'])
@@ -45,11 +52,6 @@ register_blueprints(app)
 
 if __name__ == '__main__':
     logger.info("Starting GPA Calculator Backend...")
-    print("=" * 50)
-    print("GPA Calculator Backend v2.0")
-    print("=" * 50)
-    print(f"Server: http://localhost:{config.PORT}")
-    print(f"Debug: {config.DEBUG}")
-    print("=" * 50)
-    
-    app.run(debug=config.DEBUG, port=config.PORT, use_reloader=False)
+    # Bind to 0.0.0.0 for Render/Production
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
