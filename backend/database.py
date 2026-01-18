@@ -24,6 +24,8 @@ def get_cursor(conn):
     if isinstance(conn, sqlite3.Connection):
         return conn.cursor()
     else:
+        # Lazy import to avoid startup issues
+        from psycopg2.extras import RealDictCursor
         # Use RealDictCursor for PostgreSQL to match sqlite3.Row behavior
         return conn.cursor(cursor_factory=RealDictCursor)
 
