@@ -1,5 +1,5 @@
 const CONFIG = {
-    API_URL: 'https://academic-tracker-api-pujq.onrender.com',
+    API_URL: 'http://127.0.0.1:5000',
     APP_NAME: 'GPA Calculator'
 };
 
