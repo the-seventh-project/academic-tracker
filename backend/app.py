@@ -27,12 +27,23 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route('/', methods=['GET'])
 def home():
-    """API status endpoint"""
+    """API status endpoint with database health check"""
     logger.info("Health check endpoint called")
+    db_status = "unknown"
+    try:
+        from backend.database import query_db
+        # Simple query to test connection
+        query_db("SELECT 1", one=True)
+        db_status = "connected"
+    except Exception as e:
+        db_status = f"error: {str(e)}"
+        logger.error(f"Database health check failed: {str(e)}")
+
     return jsonify({
         "status": "online",
+        "database": db_status,
         "message": "GPA Calculator API",
-        "version": "2.0.0"
+        "version": "2.1.0"
     })
 
 
