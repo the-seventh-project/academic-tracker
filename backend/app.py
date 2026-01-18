@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+import requests
 from flask import Flask, jsonify
 from flask_cors import CORS
 
@@ -52,14 +53,31 @@ def home():
     })
 
 
-@app.route('/api/campus-weather', methods=['GET'])
+@app.route('/api/campus-weather')
 def get_weather():
-    """Mock weather endpoint"""
-    return jsonify({
-        "temperature": 15,
-        "windspeed": 10,
-        "condition": "Cloudy"
-    })
+    """
+    Fetch real weather data using Open-Meteo (Free, No-key required).
+    Coordinates for Vancouver: Lat 49.28, Lon -123.12
+    """
+    try:
+        url = "https://api.open-meteo.com/v1/forecast?latitude=49.2827&longitude=-123.1207&current_weather=true"
+        response = requests.get(url, timeout=5)
+        data = response.json()
+        
+        current = data.get('current_weather', {})
+        return jsonify({
+            "temperature": current.get('temperature', 15),
+            "windspeed": current.get('windspeed', 10),
+            "condition": "Live"
+        })
+    except Exception as e:
+        logger.error(f"Weather API error: {str(e)}")
+        # Fallback to mock data if API is down
+        return jsonify({
+            "temperature": 15,
+            "windspeed": 10,
+            "condition": "Offline"
+        })
 
 
 # Register all route blueprints
@@ -71,3 +89,5 @@ if __name__ == '__main__':
     # Bind to 0.0.0.0 for Render/Production
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
+
+
