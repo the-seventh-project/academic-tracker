@@ -137,7 +137,8 @@ def create_database():
     
     # Create or Update test student account
     student_pw = generate_password_hash('password123')
-    exists = cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('test@student.com',)).fetchone()
+    cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('test@student.com',))
+    exists = cursor.fetchone()
     if exists:
         cursor.execute(format_query('UPDATE "USER" SET password = ? WHERE email = ?', conn), (student_pw, 'test@student.com'))
     else:
@@ -148,7 +149,8 @@ def create_database():
     
     # Create or Update test admin account
     admin_pw = generate_password_hash('admin123')
-    exists = cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('admin@kpu.ca',)).fetchone()
+    cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('admin@kpu.ca',))
+    exists = cursor.fetchone()
     if exists:
         cursor.execute(format_query('UPDATE "USER" SET password = ? WHERE email = ?', conn), (admin_pw, 'admin@kpu.ca'))
     else:
