@@ -1,0 +1,337 @@
+/* Components */
+
+/* --- Cards --- */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.card-header {
+    background: linear-gradient(45deg, #3a1c71, #d76d77, #ffaf7b);
+    color: white;
+    border-bottom: none;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.card-header h2,
+.card-header h4,
+.card-header p {
+    color: white !important;
+}
+
+.card-body h5 {
+    color: white !important;
+}
+
+/* Glass Panel */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* --- Buttons --- */
+.btn-primary {
+    background: linear-gradient(45deg, #6200ea, #bb86fc);
+    border: none;
+    transition: transform 0.2s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #3700b3, #6200ea);
+}
+
+.btn-light {
+    background: #e0e0e0;
+    color: #121212;
+    border: none;
+}
+
+.btn-light:hover {
+    background: white;
+}
+
+/* Bubble Button */
+.bubble-btn {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-color) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 999px;
+    padding: .25rem .6rem;
+    box-shadow: none;
+}
+
+.bubble-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+}
+
+/* --- Forms --- */
+.form-control,
+.form-select {
+    background-color: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--input-bg);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(187, 134, 252, 0.25);
+}
+
+.form-label {
+    color: #bb86fc !important;
+    font-weight: 500;
+}
+
+/* --- Alerts --- */
+.alert-info {
+    background-color: rgba(3, 218, 198, 0.1);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.alert-danger {
+    background-color: rgba(207, 102, 121, 0.1);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+/* --- Modals --- */
+.modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border-color);
+}
+
+.btn-close {
+    filter: invert(1);
+}
+
+.modal-title {
+    color: var(--text-color);
+}
+
+/* --- Typography Utilities --- */
+.gradient-label {
+    background: linear-gradient(45deg, #bb86fc, #03dac6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    font-weight: 600;
+}
+
+.gradient-accent {
+    background: linear-gradient(90deg, rgba(134, 42, 155, 1) 0%, rgba(92, 192, 242, 1) 50%, rgba(230, 228, 223, 1) 99%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    font-weight: 600;
+}
+
+#semesterGPA,
+#cumulativeGPA {
+    color: #03dac6 !important;
+    text-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
+}
+
+/* --- Dashboard Feature Cards --- */
+.features-container .feature-card {
+    background: #000 !important;
+    color: #fff !important;
+    text-decoration: none;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+    transition: background 0.25s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    display: block;
+}
+
+.features-container .feature-card h2 {
+    background: linear-gradient(45deg, #bb86fc, #03dac6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent !important;
+    font-weight: 800;
+}
+
+.features-container .feature-card p {
+    color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.features-container .feature-card:hover {
+    background: linear-gradient(135deg, #6200ea, #03dac6) !important;
+    box-shadow: 0 10px 40px rgba(80, 34, 180, 0.35) !important;
+    transform: translateY(-6px);
+}
+
+.features-row .feature-card {
+    /* Alternative style used in some versions */
+    background: linear-gradient(135deg, #6200ea, #03dac6);
+    padding: 3px;
+    border-radius: 14px;
+    text-decoration: none;
+    transition: all .22s ease;
+}
+
+.features-row .feature-card .card-body {
+    background: #000;
+    border-radius: 11px;
+    padding: 1.5rem;
+    color: #fff;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.features-row .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
+    background: linear-gradient(90deg, #7b61ff 0%, #00f0c6 100%);
+}
+
+.features-row {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+@media (max-width: 992px) {
+    .features-row {
+        flex-wrap: wrap;
+    }
+
+    .features-row .feature-card {
+        flex: 1 1 calc(50% - 1rem);
+    }
+}
+
+@media (max-width: 576px) {
+    .features-row .feature-card {
+        flex: 1 1 100%;
+    }
+}
+
+/* --- Assessment Type Selector & Toggles --- */
+#assessmentTypeSelector {
+    background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
+    border: none !important;
+    color: white !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    text-align: center;
+}
+
+#assessmentTypeSelector option {
+    background-color: #2c2c2c !important;
+    color: white !important;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #28a745;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* --- My Courses Card Specifics --- */
+.my-courses-card {
+    background-color: var(--card-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+.my-courses-card .card-header,
+.my-courses-card .card-header * {
+    color: #fff !important;
+}
+
+.my-courses-card .table {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border: none !important;
+}
+
+.my-courses-card .table td,
+.my-courses-card .table th {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.my-courses-card .btn-light {
+    background: rgba(255, 255, 255, 0.04) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Card Tables (Dark Mode Override) */
+.card .table,
+.card .table th,
+.card .table td {
+    background-color: transparent !important;
+    color: var(--text-color) !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}

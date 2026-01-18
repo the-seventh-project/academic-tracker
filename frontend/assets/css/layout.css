@@ -1,0 +1,71 @@
+/* Layout & Structure */
+
+/* Navbar */
+.navbar {
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    font-weight: bold;
+    background: -webkit-linear-gradient(45deg, #bb86fc, #03dac6);
+    background: linear-gradient(45deg, #bb86fc, #03dac6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Gradient Nav (Dashboard) */
+.gradient-nav {
+    background: linear-gradient(90deg, #3a1c71, #d76d77, #ffaf7b) !important;
+    color: #fff !important;
+}
+
+.gradient-nav .navbar-brand,
+.gradient-nav .navbar-text,
+.gradient-nav .btn {
+    color: #fff !important;
+}
+
+/* Main Container */
+.container {
+    flex: 1;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: calc(100vh - 140px);
+    padding-top: 2rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    width: 100%;
+    padding: 14px 0;
+    color: #fff !important;
+    background: rgba(30, 30, 30, 0.95) !important;
+    border-top: 1px solid var(--border-color);
+    margin-top: auto;
+}
+
+.gradient-footer {
+    background: linear-gradient(90deg, #3a1c71, #d76d77) !important;
+    color: #fff !important;
+    padding: 12px 0;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+
+    .row.justify-content-center .col-md-5,
+    .col-md-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}

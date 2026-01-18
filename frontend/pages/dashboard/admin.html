@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Main Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">🛡️ Admin Portal</span>
+            <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-4 text-center" style="margin-top: 50px; font-weight: bold;">Admin Overview</h2>
+        <div class="card shadow admin-overview">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>GPA (Sem/Cum)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentList">
+                            <tr>
+                                <td colspan="5" class="text-center">Loading students...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core & API -->
+    <script src="../../js/core/config.js"></script>
+    <script src="../../js/core/api.js"></script>
+    <script src="../../js/core/auth.js"></script>
+    <script src="../../js/pages/dashboard/admin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Student Details Modal -->
+    <div class="modal fade" id="adminStudentModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="adminStudentModalTitle">Student Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="adminStudentGPA" class="mb-3"></div>
+                    <div class="table-responsive my-courses-card">
+                        <table class="table table-hover" id="adminStudentCoursesTable">
+                            <thead>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Credits</th>
+                                    <th>Semester</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminStudentCoursesBody">
+                                <tr>
+                                    <td colspan="5" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer style="margin-top: 50px; text-align: center;">
+        &copy; 2025 GPA Calculator | Admin Overview
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+/* Base Styles & Resets */
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Links in dark mode */
+a {
+    color: #03dac6;
+}
+
+a:hover {
+    color: #bb86fc;
+}
+
+/* Fix text visibility */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+span,
+div {
+    color: var(--text-color);
+}
+
+/* Input Placeholders */
+::placeholder {
+    color: #888 !important;
+    opacity: 1;
+}
+
+/* Base Table Overrides */
+.table thead th {
+    color: #03dac6 !important;
+    border-bottom: 2px solid #333;
+}
+
+.table {
+    background-color: white !important;
+    color: black !important;
+    border-radius: 5px;
+}
+
+.table td {
+    color: black !important;
+    font-weight: 500;
+}
+
+.table-hover tbody tr:hover {
+    color: black !important;
+    background-color: #f2f2f2 !important;
+}
+
+/* Hide number input spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
