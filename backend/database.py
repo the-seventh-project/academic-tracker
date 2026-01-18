@@ -4,9 +4,27 @@ import sqlite3
 
 from backend.config import config
 
+def sanitize_db_uri(uri):
+    """Clean up common database URL mistakes."""
+    if not uri:
+        return uri
+    
+    # Remove leading/trailing quotes and spaces (accidental paste issues)
+    uri = uri.strip().strip("'").strip('"')
+    
+    # If the user copied the 'psql' command instead of just the URL
+    if uri.startswith('psql '):
+        uri = uri.split('"', 1)[1].rsplit('"', 1)[0] if '"' in uri else uri.replace('psql ', '')
+
+    # Fix postgres:// -> postgresql:// (required by newer drivers/SQLAlchemy)
+    if uri.startswith('postgres://'):
+        uri = uri.replace('postgres://', 'postgresql://', 1)
+        
+    return uri
+
 def get_db_connection():
     """Get a database connection based on the configuration."""
-    db_uri = config.SQLALCHEMY_DATABASE_URI
+    db_uri = sanitize_db_uri(config.SQLALCHEMY_DATABASE_URI)
     
     if db_uri.startswith('sqlite'):
         # SQLite connection
