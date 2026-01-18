@@ -1,6 +1,6 @@
 # Course Routes
 from flask import Blueprint, request, jsonify
-from ..database import query_db, execute_db
+from backend.database import query_db, execute_db
 
 courses_bp = Blueprint('courses', __name__)
 

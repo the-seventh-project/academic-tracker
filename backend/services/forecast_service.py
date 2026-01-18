@@ -1,4 +1,4 @@
-from ..services.gpa_service import get_gpa_value_for_percentage
+from backend.services.gpa_service import get_gpa_value_for_percentage
 
 def calculate_gpa_forecast(current_summary: dict, hypothetical_courses: list, target_gpa: float = None) -> dict:
     """

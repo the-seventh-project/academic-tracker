@@ -1,6 +1,6 @@
 # Config Service
 # Handles retrieval of system configuration and static data
-from ..database import query_db
+from backend.database import query_db
 
 def get_assessment_types() -> list:
     """

@@ -1,8 +1,8 @@
 # Student API Routes
 # Profile, Historical Performance, and Grade Prediction
 from flask import Blueprint, request, jsonify
-from ..database import query_db, execute_db
-from ..services.gpa_service import calculate_student_gpa
+from backend.database import query_db, execute_db
+from backend.services.gpa_service import calculate_student_gpa
 
 students_bp = Blueprint('students', __name__, url_prefix='/api/students')
 

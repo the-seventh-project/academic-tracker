@@ -1,6 +1,6 @@
 # Assessment Routes
 from flask import Blueprint, request, jsonify
-from ..database import query_db, execute_db
+from backend.database import query_db, execute_db
 
 assessments_bp = Blueprint('assessments', __name__)
 

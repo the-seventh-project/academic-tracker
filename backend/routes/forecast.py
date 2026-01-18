@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from ..services.forecast_service import calculate_gpa_forecast, calculate_course_grade_forecast
-from ..services.gpa_service import calculate_student_gpa
+from backend.services.forecast_service import calculate_gpa_forecast, calculate_course_grade_forecast
+from backend.services.gpa_service import calculate_student_gpa
 
 forecast_bp = Blueprint('forecast', __name__, url_prefix='/api/forecast')
 

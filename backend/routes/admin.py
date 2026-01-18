@@ -1,7 +1,7 @@
 # Admin Routes
 from flask import Blueprint, jsonify
-from ..database import query_db, execute_db
-from ..services.gpa_service import calculate_student_gpa
+from backend.database import query_db, execute_db
+from backend.services.gpa_service import calculate_student_gpa
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/api/admin')
 

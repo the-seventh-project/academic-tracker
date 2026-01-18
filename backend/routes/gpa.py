@@ -1,7 +1,7 @@
 # GPA Calculation Routes
 from flask import Blueprint, jsonify
-from ..database import query_db
-from ..services.gpa_service import calculate_student_gpa, calculate_gpa_breakdown, get_grading_scale
+from backend.database import query_db
+from backend.services.gpa_service import calculate_student_gpa, calculate_gpa_breakdown, get_grading_scale
 
 gpa_bp = Blueprint('gpa', __name__)
 

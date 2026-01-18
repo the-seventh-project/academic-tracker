@@ -11,14 +11,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-import sys
-import os
-
-# Add the directory containing this file to the Python path for robust imports
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
-from routes import register_blueprints
-from config import config
+from backend.routes import register_blueprints
+from backend.config import config
 
 app = Flask(__name__)
 # Permissive CORS for production stability

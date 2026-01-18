@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from ..services.config_service import get_assessment_types, get_semesters
+from backend.services.config_service import get_assessment_types, get_semesters
 
 config_bp = Blueprint('config', __name__)
 

@@ -1,7 +1,7 @@
 import sqlite3
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from .config import config
+from backend.config import config
 
 def get_db_connection():
     """Get a database connection based on the configuration."""

@@ -1,7 +1,7 @@
 # Authentication Routes
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from ..database import query_db, execute_db
+from backend.database import query_db, execute_db
 
 auth_bp = Blueprint('auth', __name__)
 

@@ -1,6 +1,6 @@
 # GPA Calculation Service
 # Pure business logic, no HTTP dependencies
-from ..database import query_db
+from backend.database import query_db
 
 
 def get_grading_scale() -> list:
