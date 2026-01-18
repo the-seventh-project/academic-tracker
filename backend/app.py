@@ -21,8 +21,8 @@ from backend.routes import register_blueprints
 from backend.config import config
 
 app = Flask(__name__)
-# Permissive CORS for production stability
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+# Fully permissive CORS for all routes (important for production connectivity)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 
 @app.route('/', methods=['GET'])

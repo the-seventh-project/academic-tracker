@@ -3,33 +3,49 @@ from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from backend.database import query_db, execute_db
 
+import logging
 auth_bp = Blueprint('auth', __name__)
+logger = logging.getLogger(__name__)
 
 
 @auth_bp.route('/api/auth/login', methods=['POST'])
 def login():
     """Student/Admin login"""
-    data = request.json
-    email = data.get('email')
-    password = data.get('password')
+    try:
+        data = request.json
+        email = data.get('email')
+        password = data.get('password')
+        
+        logger.info(f"Attempting login for email: {email}")
 
-    user = query_db(
-        'SELECT * FROM "USER" WHERE email = ?',
-        (email,),
-        one=True
-    )
+        user = query_db(
+            'SELECT * FROM "USER" WHERE email = ?',
+            (email,),
+            one=True
+        )
 
-    if user and check_password_hash(user['password'], password):
-        return jsonify({
-            "success": True,
-            "user": {
-                "id": user['user_id'],
-                "name": f"{user['firstname']} {user['lastname']}",
-                "email": user['email'],
-                "type": user['user_type']
-            }
-        })
-    return jsonify({"success": False, "message": "Invalid credentials"}), 401
+        if user:
+            logger.info("User found in database, checking password...")
+            if check_password_hash(user['password'], password):
+                logger.info("Password verification successful")
+                return jsonify({
+                    "success": True,
+                    "user": {
+                        "id": user['user_id'],
+                        "name": f"{user['firstname']} {user['lastname']}",
+                        "email": user['email'],
+                        "type": user['user_type']
+                    }
+                })
+            else:
+                logger.warning("Password verification failed")
+        else:
+            logger.warning("User not found in database")
+            
+        return jsonify({"success": False, "message": "Invalid credentials"}), 401
+    except Exception as e:
+        logger.error(f"Critical error during login: {str(e)}", exc_info=True)
+        return jsonify({"success": False, "message": f"Database Error: {str(e)}"}), 500
 
 
 @auth_bp.route('/api/auth/register', methods=['POST'])
