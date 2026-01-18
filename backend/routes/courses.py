@@ -33,9 +33,19 @@ def add_course():
     """Add a new course"""
     data = request.json
 
+    sql = '''INSERT INTO "COURSE" (course_code, course_name, credit_hours, semester, student_id)
+             VALUES (?, ?, ?, ?, ?)'''
+    
+    # Check if we are using Postgres (for Render) to add RETURNING
+    from backend.database import get_db_connection
+    conn = get_db_connection()
+    import sqlite3
+    if not isinstance(conn, sqlite3.Connection):
+         sql += ' RETURNING course_id'
+    conn.close()
+
     course_id = execute_db(
-        '''INSERT INTO "COURSE" (course_code, course_name, credit_hours, semester, student_id)
-           VALUES (?, ?, ?, ?, ?)''',
+        sql,
         (data['course_code'], data['course_name'], data['credit_hours'],
          data['semester'], data['student_id'])
     )

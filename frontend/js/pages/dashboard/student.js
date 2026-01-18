@@ -21,7 +21,10 @@ window.onload = async () => {
     // 2. Setup UI
     Auth.updateNavUI('studentName');
 
-    // 3. Load Data
+    // 3. Set Global User
+    currentUser = user;
+
+    // 4. Load Data
     await loadDashboardData(user.id);
 };
 
@@ -89,7 +92,7 @@ async function loadGPA() {
         if (cumEl) cumEl.textContent = data.cumulative_gpa.toFixed(2);
 
         // Calculate total credits
-        const totalCredits = courses.reduce((sum, course) => sum + (course.credit_hours || 0), 0);
+        const totalCredits = courses.reduce((sum, course) => sum + (Number(course.credit_hours) || 0), 0);
         const creditsEl = document.getElementById('totalCredits');
         if (creditsEl) creditsEl.textContent = totalCredits;
 

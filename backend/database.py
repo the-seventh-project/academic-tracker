@@ -81,11 +81,10 @@ def execute_db(query, args=()):
         conn.commit()
         # Handle lastrowid for PostgreSQL
         if not isinstance(conn, sqlite3.Connection):
-            # For PostgreSQL, we typically use RETURNING id, but for now 
-            # we'll try to emulate lastrowid if possible (limited support)
-            try:
-                last_id = cursor.lastrowid
-            except AttributeError:
+            # PostgreSQL: Try to fetch returned ID if available (needs RETURNING clause in SQL)
+            if cursor.description:
+                last_id = cursor.fetchone()[0]
+            else:
                 last_id = None
         else:
             last_id = cursor.lastrowid
