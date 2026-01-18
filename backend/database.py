@@ -5,22 +5,27 @@ import sqlite3
 from backend.config import config
 
 def sanitize_db_uri(uri):
-    """Clean up common database URL mistakes."""
+    """Aggressively clean up database URL from environment variable mistakes."""
     if not uri:
         return uri
     
-    # Remove leading/trailing quotes and spaces (accidental paste issues)
-    uri = uri.strip().strip("'").strip('"')
+    # 1. Strip ALL whitespace and ALL variations of single/double quotes from both ends
+    # This handles "'url'", '"url"', or " 'url' "
+    uri = uri.strip().strip("'").strip('"').strip("'").strip('"').strip()
     
-    # If the user copied the 'psql' command instead of just the URL
-    if uri.startswith('psql '):
-        uri = uri.split('"', 1)[1].rsplit('"', 1)[0] if '"' in uri else uri.replace('psql ', '')
+    # 2. Handle cases where the user might have pasted a shell command 'psql "..." '
+    if 'postgresql://' in uri and 'psql' in uri.lower():
+        # Just grab the part that starts with postgresql:// and ends before the next quote/space
+        import re
+        match = re.search(r'(postgresql?://[^\s\'"]+)', uri)
+        if match:
+            uri = match.group(1)
 
-    # Fix postgres:// -> postgresql:// (required by newer drivers/SQLAlchemy)
+    # 3. Standardize driver name (SQLAlchemy/psycopg2 requires postgresql://)
     if uri.startswith('postgres://'):
         uri = uri.replace('postgres://', 'postgresql://', 1)
         
-    return uri
+    return uri.strip()
 
 def get_db_connection():
     """Get a database connection based on the configuration."""
