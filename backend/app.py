@@ -1,15 +1,11 @@
-# GPA Calculator Backend
-# Entry point - imports and registers all Flask blueprints
-from flask import Flask, jsonify
-from flask_cors import CORS
-import logging
+import os
+import sys
 
-# Configure Logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-logger = logging.getLogger(__name__)
+# Definitive fix for Render: Add project root to path
+# This ensures 'backend' can be imported as a package
+root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if root not in sys.path:
+    sys.path.insert(0, root)
 
 from backend.routes import register_blueprints
 from backend.config import config
