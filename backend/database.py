@@ -1,6 +1,7 @@
 import sqlite3
-import psycopg2
-from psycopg2.extras import RealDictCursor
+# Note: psycopg2 is imported lazily inside get_db_connection 
+# to avoid compatibility issues during startup
+
 from backend.config import config
 
 def get_db_connection():
@@ -15,8 +16,8 @@ def get_db_connection():
         return conn
     else:
         # PostgreSQL connection (for Render/Neon)
-        conn = psycopg2.connect(db_uri)
-        return conn
+        import psycopg2
+        return psycopg2.connect(db_uri)
 
 def get_cursor(conn):
     """Get a cursor that returns results as dictionaries."""
