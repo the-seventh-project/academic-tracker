@@ -135,21 +135,27 @@ def create_database():
     insert_types_query = format_query(f'INSERT {IGNORE} INTO "ASSESSMENT_TYPE" (name, default_weight, color) VALUES (?, ?, ?) {CONFLICT}', conn)
     cursor.executemany(insert_types_query, assessment_types)
     
-    # Create test student account
+    # Create or Update test student account
     student_pw = generate_password_hash('password123')
-    insert_student_query = format_query(f'''
-        INSERT {IGNORE} INTO "USER" (firstname, lastname, email, password, user_type)
-        VALUES ('Test', 'Student', 'test@student.com', '{student_pw}', 'Student') {CONFLICT}
-    ''', conn)
-    cursor.execute(insert_student_query)
+    exists = cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('test@student.com',)).fetchone()
+    if exists:
+        cursor.execute(format_query('UPDATE "USER" SET password = ? WHERE email = ?', conn), (student_pw, 'test@student.com'))
+    else:
+        cursor.execute(format_query('''
+            INSERT INTO "USER" (firstname, lastname, email, password, user_type)
+            VALUES (?, ?, ?, ?, 'Student')
+        ''', conn), ('Test', 'Student', 'test@student.com', student_pw))
     
-    # Create test admin account
+    # Create or Update test admin account
     admin_pw = generate_password_hash('admin123')
-    insert_admin_query = format_query(f'''
-        INSERT {IGNORE} INTO "USER" (firstname, lastname, email, password, user_type)
-        VALUES ('Admin', 'User', 'admin@kpu.ca', '{admin_pw}', 'Admin') {CONFLICT}
-    ''', conn)
-    cursor.execute(insert_admin_query)
+    exists = cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('admin@kpu.ca',)).fetchone()
+    if exists:
+        cursor.execute(format_query('UPDATE "USER" SET password = ? WHERE email = ?', conn), (admin_pw, 'admin@kpu.ca'))
+    else:
+        cursor.execute(format_query('''
+            INSERT INTO "USER" (firstname, lastname, email, password, user_type)
+            VALUES (?, ?, ?, ?, 'Admin')
+        ''', conn), ('Admin', 'User', 'admin@kpu.ca', admin_pw))
     
     conn.commit()
     conn.close()
