@@ -11,7 +11,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     try {
         const data = await window.API.post('/api/auth/login', { email, password });
 
-        if (data.user) {
+        if (data && data.user) {
             // Save user data to localStorage
             localStorage.setItem('user', JSON.stringify(data.user));
 
@@ -25,7 +25,12 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
             showError(data.message || 'Invalid credentials');
         }
     } catch (error) {
-        showError('Cannot connect to server. Make sure backend is running at ' + window.API_URL);
+        // Detailed error for debugging
+        const errorMessage = error.message.includes('Failed to fetch')
+            ? `Network Error: Cannot connect to ${window.API_URL}. Check if backend is alive.`
+            : `Server Error: ${error.message}`;
+        showError(errorMessage);
+        console.error('Login Failed:', error);
     }
 });
 
