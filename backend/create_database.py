@@ -3,13 +3,14 @@ import psycopg2
 from .database import get_db_connection, format_query
 from werkzeug.security import generate_password_hash
 
+
 def create_database():
     """Create all database tables and initial data (supports SQLite and PostgreSQL)"""
     conn = get_db_connection()
     cursor = conn.cursor()
-    
+
     is_sqlite = isinstance(conn, sqlite3.Connection)
-    
+
     # helper for auto-increment and keys
     PK_TYPE = "INTEGER PRIMARY KEY AUTOINCREMENT" if is_sqlite else "SERIAL PRIMARY KEY"
     IGNORE = "OR IGNORE" if is_sqlite else ""
@@ -26,7 +27,7 @@ def create_database():
             user_type VARCHAR(10) NOT NULL DEFAULT 'Student'
         )
     ''')
-    
+
     # Create COURSE table
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS "COURSE" (
@@ -39,7 +40,7 @@ def create_database():
             FOREIGN KEY (student_id) REFERENCES "USER"(user_id) ON DELETE CASCADE
         )
     ''')
-    
+
     # Create ASSESSMENT table
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS "ASSESSMENT" (
@@ -55,7 +56,7 @@ def create_database():
             FOREIGN KEY (course_id) REFERENCES "COURSE"(course_id) ON DELETE CASCADE
         )
     ''')
-    
+
     # Create GPAREPORT table
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS "GPAREPORT" (
@@ -67,7 +68,7 @@ def create_database():
             FOREIGN KEY (student_id) REFERENCES "USER"(user_id) ON DELETE CASCADE
         )
     ''')
-    
+
     # Create WHATIFSCENARIO table
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS "WHATIFSCENARIO" (
@@ -81,7 +82,7 @@ def create_database():
             FOREIGN KEY (course_id) REFERENCES "COURSE"(course_id) ON DELETE CASCADE
         )
     ''')
-    
+
     # Create ASSESSMENT_TYPE table
     cursor.execute(f'''
         CREATE TABLE IF NOT EXISTS "ASSESSMENT_TYPE" (
@@ -102,7 +103,7 @@ def create_database():
             gpa_value DECIMAL(3,2) NOT NULL
         )
     ''')
-    
+
     # Insert KPU grading scale data
     grading_scale = [
         ('A+', 90.00, 100.00, 4.00),
@@ -117,8 +118,9 @@ def create_database():
         ('D', 50.00, 59.99, 1.00),
         ('F', 0.00, 49.99, 0.00)
     ]
-    
-    insert_scale_query = format_query(f'INSERT {IGNORE} INTO "GRADINGSCALE" (letter_grade, min_score, max_score, gpa_value) VALUES (?, ?, ?, ?) {CONFLICT}', conn)
+
+    insert_scale_query = format_query(
+        f'INSERT {IGNORE} INTO "GRADINGSCALE" (letter_grade, min_score, max_score, gpa_value) VALUES (?, ?, ?, ?) {CONFLICT}', conn)
     cursor.executemany(insert_scale_query, grading_scale)
 
     # Insert Default Assessment Types
@@ -129,36 +131,41 @@ def create_database():
         ('Final', 30.0, '#3a1c71'),       # Deep Purple
         ('Project', 15.0, '#ffaf7b'),     # Orange
         ('Lab', 10.0, '#ff8c00'),         # Dark Orange
-        ('Participation', 5.0, '#cf6679') # Pink
+        ('Participation', 5.0, '#cf6679')  # Pink
     ]
 
-    insert_types_query = format_query(f'INSERT {IGNORE} INTO "ASSESSMENT_TYPE" (name, default_weight, color) VALUES (?, ?, ?) {CONFLICT}', conn)
+    insert_types_query = format_query(
+        f'INSERT {IGNORE} INTO "ASSESSMENT_TYPE" (name, default_weight, color) VALUES (?, ?, ?) {CONFLICT}', conn)
     cursor.executemany(insert_types_query, assessment_types)
-    
+
     # Create or Update test student account
     student_pw = generate_password_hash('password123')
-    cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('test@student.com',))
+    cursor.execute(format_query(
+        'SELECT user_id FROM "USER" WHERE email = ?', conn), ('test@student.com',))
     exists = cursor.fetchone()
     if exists:
-        cursor.execute(format_query('UPDATE "USER" SET password = ? WHERE email = ?', conn), (student_pw, 'test@student.com'))
+        cursor.execute(format_query(
+            'UPDATE "USER" SET password = ? WHERE email = ?', conn), (student_pw, 'test@student.com'))
     else:
         cursor.execute(format_query('''
             INSERT INTO "USER" (firstname, lastname, email, password, user_type)
             VALUES (?, ?, ?, ?, 'Student')
         ''', conn), ('Test', 'Student', 'test@student.com', student_pw))
-    
+
     # Create or Update test admin account
     admin_pw = generate_password_hash('admin123')
-    cursor.execute(format_query('SELECT user_id FROM "USER" WHERE email = ?', conn), ('admin@kpu.ca',))
+    cursor.execute(format_query(
+        'SELECT user_id FROM "USER" WHERE email = ?', conn), ('admin@kpu.ca',))
     exists = cursor.fetchone()
     if exists:
-        cursor.execute(format_query('UPDATE "USER" SET password = ? WHERE email = ?', conn), (admin_pw, 'admin@kpu.ca'))
+        cursor.execute(format_query(
+            'UPDATE "USER" SET password = ? WHERE email = ?', conn), (admin_pw, 'admin@kpu.ca'))
     else:
         cursor.execute(format_query('''
             INSERT INTO "USER" (firstname, lastname, email, password, user_type)
             VALUES (?, ?, ?, ?, 'Admin')
         ''', conn), ('Admin', 'User', 'admin@kpu.ca', admin_pw))
-    
+
     conn.commit()
 
     # --- Migrations: add columns that may not exist in older deployments ---
@@ -170,9 +177,11 @@ def create_database():
     for col_name, col_def in migration_columns:
         try:
             if is_sqlite:
-                cursor.execute(f'ALTER TABLE "USER" ADD COLUMN {col_name} {col_def}')
+                cursor.execute(
+                    f'ALTER TABLE "USER" ADD COLUMN {col_name} {col_def}')
             else:
-                cursor.execute(f'ALTER TABLE "USER" ADD COLUMN IF NOT EXISTS {col_name} {col_def}')
+                cursor.execute(
+                    f'ALTER TABLE "USER" ADD COLUMN IF NOT EXISTS {col_name} {col_def}')
             conn.commit()
             print(f"Migration: added column '{col_name}' to USER table.")
         except Exception:

@@ -1,16 +1,24 @@
 :root {
     /* Academic Tracker — Light Color Palette */
-    --bg-color:      #F7F7F8;
+
+    /* Typography */
+    --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+    /* Bootstrap font override — ensures all Bootstrap components use same font */
+    --bs-font-sans-serif: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --bs-body-font-family: var(--font-family);
+
+    --bg-color: #F7F7F8;
     --surface-color: #FFFFFF;
-    --card-bg:       #FFFFFF;
-    --muted-color:   #5B616B;
-    --text-muted:    #5B616B;
-    --text-color:    #121417;
+    --card-bg: #FFFFFF;
+    --muted-color: #5B616B;
+    --text-muted: #5B616B;
+    --text-color: #121417;
 
     /* Semantic Aliases */
-    --primary-color:   #2A2E35;
+    --primary-color: #2A2E35;
     --secondary-color: #121417;
-    --accent-color:    #5B616B;
-    --input-bg:        #F7F7F8;
-    --border-color:    #C8CCD2;
+    --accent-color: #5B616B;
+    --input-bg: #F7F7F8;
+    --border-color: #C8CCD2;
 }

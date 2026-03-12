@@ -92,7 +92,7 @@ async function loadGPA() {
         if (semEl) semEl.textContent = fallGPA.toFixed(2);
         if (cumEl) cumEl.textContent = data.cumulative_gpa.toFixed(2);
 
-        // Calculate total credits
+        // Calculate total credits — parse as Number to avoid string concatenation
         const totalCredits = courses.reduce((sum, course) => sum + (Number(course.credit_hours) || 0), 0);
         const creditsEl = document.getElementById('totalCredits');
         if (creditsEl) creditsEl.textContent = totalCredits;
@@ -508,12 +508,12 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
     // Gray-scale shades — no rainbow, aligned with Academic Tracker color scheme
     const colorPalette = {
         'Assignment': { border: '#121417', bg: 'rgba(18, 20, 23, 0.07)' },
-        'Quiz':       { border: '#3D4249', bg: 'rgba(61, 66, 73, 0.07)' },
-        'Midterm':    { border: '#5B616B', bg: 'rgba(91, 97, 107, 0.07)' },
-        'Final':      { border: '#7A8290', bg: 'rgba(122, 130, 144, 0.07)' },
-        'Project':    { border: '#9EA4AB', bg: 'rgba(158, 164, 171, 0.07)' },
-        'Lab':        { border: '#2A2E35', bg: 'rgba(42, 46, 53, 0.07)' },
-        'Exam':       { border: '#4A5058', bg: 'rgba(74, 80, 88, 0.07)' }
+        'Quiz': { border: '#3D4249', bg: 'rgba(61, 66, 73, 0.07)' },
+        'Midterm': { border: '#5B616B', bg: 'rgba(91, 97, 107, 0.07)' },
+        'Final': { border: '#7A8290', bg: 'rgba(122, 130, 144, 0.07)' },
+        'Project': { border: '#9EA4AB', bg: 'rgba(158, 164, 171, 0.07)' },
+        'Lab': { border: '#2A2E35', bg: 'rgba(42, 46, 53, 0.07)' },
+        'Exam': { border: '#4A5058', bg: 'rgba(74, 80, 88, 0.07)' }
     };
 
     // Get all unique semesters across all types
@@ -539,7 +539,7 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
 
     // Create datasets for each assessment type
     const datasets = typeDataArray.map(({ type, data }) => {
-        const colors = colorPalette[type] || { border: '#ff8c00', bg: 'rgba(255, 140, 0, 0.15)' };
+        const colors = colorPalette[type] || { border: '#4A5058', bg: 'rgba(74, 80, 88, 0.07)' };
 
         // Map data to match all semesters (fill with null for missing semesters)
         const mappedData = sortedSemesters.map(semester => {
