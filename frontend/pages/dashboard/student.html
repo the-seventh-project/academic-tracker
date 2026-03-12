@@ -70,7 +70,7 @@
                 <div class="card shadow">
                     <div class="card-body text-center">
                         <h5 class="card-title">Semester</h5>
-                        <h1 class="display-3" id="currentSemester">Fall</h1>
+                        <h1 class="display-3" id="currentSemester">—</h1>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,9 @@
                 <h5 class="mb-0">GPA Trend</h5>
             </div>
             <div class="card-body">
-                <canvas id="gpaChart"></canvas>
+                <div style="position: relative; width: 100%; height: 600px;">
+                    <canvas id="gpaChart"></canvas>
+                </div>
             </div>
         </div>
 
@@ -103,7 +105,7 @@
                         <option value="Final">Finals</option>
                     </select>
                 </div>
-                <div id="assessmentTrendContainer">
+                <div id="assessmentTrendContainer" style="position: relative; width: 100%; height: 600px;">
                     <canvas id="assessmentTypeTrendChart"></canvas>
                 </div>
             </div>
@@ -147,9 +149,8 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href="../tools/grade-forecast.html" class="btn btn-outline-primary btn-lg w-100 py-3"
-                    style="font-weight: 600;">
-                    Course Forecast
+                <a href="../tools/grade-forecast.html" class="btn btn-course-forecast btn-lg w-100 py-3" style="font-weight: 600;">
+                    📈 Course Forecast
                 </a>
             </div>
         </div>

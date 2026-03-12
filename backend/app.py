@@ -84,30 +84,6 @@ def get_weather():
 register_blueprints(app)
 
 
-# Global error handlers — always return JSON so the frontend can parse the response
-@app.errorhandler(400)
-def bad_request(e):
-    return jsonify({"error": "Bad request", "message": str(e)}), 400
-
-@app.errorhandler(404)
-def not_found(e):
-    return jsonify({"error": "Not found", "message": str(e)}), 404
-
-@app.errorhandler(405)
-def method_not_allowed(e):
-    return jsonify({"error": "Method not allowed", "message": str(e)}), 405
-
-@app.errorhandler(500)
-def internal_error(e):
-    logger.error(f"Internal server error: {str(e)}", exc_info=True)
-    return jsonify({"error": "Internal server error", "message": "An unexpected error occurred. Please try again."}), 500
-
-@app.errorhandler(Exception)
-def unhandled_exception(e):
-    logger.error(f"Unhandled exception: {str(e)}", exc_info=True)
-    return jsonify({"error": "Internal server error", "message": "An unexpected error occurred. Please try again."}), 500
-
-
 if __name__ == '__main__':
     logger.info("Starting Academic Tracker Backend...")
     # Bind to 0.0.0.0 for Render/Production
