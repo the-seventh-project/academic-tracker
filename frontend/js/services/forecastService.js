@@ -2,17 +2,18 @@
 // Handles "What-If" scenario calculations via Backend API.
 
 const forecastService = {
-    async predictGPA(currentGPA, currentCredits, courses) {
+    async predictGPA(currentGPA, currentCredits, courses, targetGPA) {
         return window.API.post('/api/forecast/gpa', {
-            current_gpa: currentGPA,
-            credits_earned: currentCredits,
-            courses: courses
+            current_summary: { cumulative_gpa: currentGPA, total_credits: currentCredits },
+            hypothetical_courses: courses,
+            target_gpa: targetGPA || null
         });
     },
 
-    async predictCourseGrade(assessments) {
+    async predictCourseGrade(assessments, targetGrade) {
         return window.API.post('/api/forecast/course-grade', {
-            assessments: assessments
+            assessments: assessments,
+            target_grade: targetGrade || null
         });
     }
 };

@@ -85,7 +85,7 @@ def execute_db(query, args=()):
             # we'll try to emulate lastrowid if possible (limited support)
             try:
                 last_id = cursor.lastrowid
-            except AttributeError:
+            except Exception:
                 last_id = None
         else:
             last_id = cursor.lastrowid

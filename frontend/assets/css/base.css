@@ -14,12 +14,18 @@ body {
 }
 
 /* Single font family across all elements */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     font-family: var(--font-family);
 }
 
 /* Force all form elements to use our color scheme */
-input, select, textarea, option, optgroup {
+input,
+select,
+textarea,
+option,
+optgroup {
     color: var(--text-color) !important;
     background-color: var(--input-bg) !important;
     font-family: var(--font-family) !important;

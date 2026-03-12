@@ -30,24 +30,20 @@ function setupHeader(user) {
 
 async function loadCurrentSummary(userId) {
     try {
-        const summary = await window.gpaService.getBreakdown(userId);
+        const summary = await window.gpaService.getBreakdown(userId); // Or getSummary if only cum needed
         const cumGPA = summary.cumulative_gpa || 0;
         const credits = summary.total_credits || 0;
 
-        // Use the most recent semester's GPA as "Current Term GPA"
-        const semesters = Array.isArray(summary.semesters) ? summary.semesters : [];
-        const latestSem = semesters.length > 0 ? semesters[semesters.length - 1] : null;
-        const termGPA = latestSem && latestSem.gpa != null ? latestSem.gpa : 0;
-
-        document.getElementById('currentTermGPA').textContent = termGPA.toFixed(2);
         document.getElementById('currentCumulativeGPA').textContent = cumGPA.toFixed(2);
         document.getElementById('creditsEarned').textContent = credits;
 
         // Store for payload
         window.currentSummary = { cumulative_gpa: cumGPA, total_credits: credits };
+
+        // Reset term GPA display
+        document.getElementById('currentTermGPA').textContent = "0.00"; // Start fresh
     } catch (e) {
         console.error('Failed to load summary', e);
-        Notify.error('Could not load your current GPA summary. Please refresh.');
     }
 }
 
@@ -101,7 +97,7 @@ async function runAnalysis() {
     const targetGPA = parseFloat(document.getElementById('targetGPA').value);
 
     if (isNaN(targetGPA) || targetGPA < 0 || targetGPA > 4.33) {
-        Notify.warning('Please enter a valid target GPA (0.0 – 4.33).');
+        alert("Please enter a valid target GPA (0.0 - 4.33)");
         return;
     }
 
@@ -126,7 +122,7 @@ async function runAnalysis() {
     });
 
     if (hypotheticalCourses.length === 0) {
-        Notify.warning('Please add at least one valid future course.');
+        alert("Please add at least one valid future course.");
         return;
     }
 
@@ -135,13 +131,14 @@ async function runAnalysis() {
         const result = await window.forecastService.predictGPA(
             currentSummary.cumulative_gpa,
             currentSummary.total_credits,
-            hypotheticalCourses
+            hypotheticalCourses,
+            targetGPA
         );
 
         renderResults(result);
 
     } catch (error) {
-        Notify.error('Error running analysis: ' + error.message);
+        alert("Error running analysis: " + error.message);
     }
 }
 

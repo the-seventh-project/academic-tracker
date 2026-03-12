@@ -58,7 +58,10 @@ const GpaChart = {
                         backgroundColor: 'rgba(0,0,0,0.8)',
                         padding: 10,
                         callbacks: {
-                            label: (context) => `GPA: ${context.raw.toFixed(2)}`
+                            label: (context) => {
+                                const val = context.raw;
+                                return `GPA: ${val != null ? Number(val).toFixed(2) : '—'}`;
+                            }
                         }
                     }
                 }
