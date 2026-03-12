@@ -17,6 +17,7 @@ window.onload = async () => {
         return;
     }
     const user = JSON.parse(userData);
+    currentUser = user; // store globally so all functions can access it
 
     // 2. Setup UI
     Auth.updateNavUI('studentName');
@@ -270,34 +271,34 @@ function createGPAChart(semesterGPAs) {
             datasets: [{
                 label: 'Semester GPA',
                 data: data,
-                borderColor: '#bb86fc',
-                backgroundColor: 'rgba(187, 134, 252, 0.15)',
+                borderColor: '#2A2E35',
+                backgroundColor: 'rgba(42, 46, 53, 0.07)',
                 tension: 0.4,
                 fill: true,
                 pointRadius: 6,
                 pointHoverRadius: 8,
-                pointBackgroundColor: '#bb86fc',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 3,
-                pointHoverBackgroundColor: '#03dac6',
-                pointHoverBorderColor: '#fff',
-                borderWidth: 3
+                pointBackgroundColor: '#121417',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2,
+                pointHoverBackgroundColor: '#2A2E35',
+                pointHoverBorderColor: '#FFFFFF',
+                borderWidth: 2.5
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
             animation: {
-                duration: 1500,
+                duration: 1200,
                 easing: 'easeInOutQuart'
             },
             animations: {
                 y: {
-                    duration: 2000,
+                    duration: 1500,
                     easing: 'easeInOutQuart',
                     delay: (context) => {
                         if (context.type === 'data') {
-                            return context.dataIndex * 100 + context.datasetIndex * 80;
+                            return context.dataIndex * 80 + context.datasetIndex * 60;
                         }
                         return 0;
                     }
@@ -308,30 +309,22 @@ function createGPAChart(semesterGPAs) {
                     display: true,
                     position: 'top',
                     labels: {
-                        font: {
-                            size: 14,
-                            weight: '600'
-                        },
-                        color: '#e0e0e0',
+                        font: { size: 13, weight: '600' },
+                        color: '#2A2E35',
                         padding: 15
                     }
                 },
                 title: { display: false },
                 tooltip: {
-                    backgroundColor: 'rgba(30, 30, 30, 0.95)',
-                    titleColor: '#bb86fc',
-                    bodyColor: '#e0e0e0',
-                    borderColor: '#bb86fc',
-                    borderWidth: 2,
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#121417',
+                    bodyColor: '#5B616B',
+                    borderColor: '#C8CCD2',
+                    borderWidth: 1,
                     padding: 12,
-                    cornerRadius: 8,
-                    titleFont: {
-                        size: 14,
-                        weight: 'bold'
-                    },
-                    bodyFont: {
-                        size: 13
-                    },
+                    cornerRadius: 6,
+                    titleFont: { size: 13, weight: 'bold' },
+                    bodyFont: { size: 12 },
                     callbacks: {
                         label: function (context) {
                             return 'GPA: ' + context.parsed.y.toFixed(2);
@@ -345,40 +338,30 @@ function createGPAChart(semesterGPAs) {
                     max: 4.0,
                     ticks: {
                         stepSize: 0.5,
-                        color: '#e0e0e0',
-                        font: {
-                            size: 12
-                        }
+                        color: '#5B616B',
+                        font: { size: 12 }
                     },
                     title: {
                         display: true,
                         text: 'GPA',
-                        color: '#bb86fc',
-                        font: {
-                            size: 14,
-                            weight: '600'
-                        }
+                        color: '#2A2E35',
+                        font: { size: 13, weight: '600' }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.08)',
+                        color: 'rgba(42, 46, 53, 0.1)',
                         drawBorder: false
                     }
                 },
                 x: {
                     ticks: {
-                        color: '#e0e0e0',
-                        font: {
-                            size: 12
-                        }
+                        color: '#5B616B',
+                        font: { size: 12 }
                     },
                     title: {
                         display: true,
                         text: 'Semester',
-                        color: '#bb86fc',
-                        font: {
-                            size: 14,
-                            weight: '600'
-                        }
+                        color: '#2A2E35',
+                        font: { size: 13, weight: '600' }
                     },
                     grid: {
                         color: 'rgba(255, 255, 255, 0.05)',
@@ -522,15 +505,15 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
         assessmentTypeTrendChartInstance.destroy();
     }
 
-    // Color palette for different assessment types (using website color scheme)
+    // Gray-scale shades — no rainbow, aligned with Academic Tracker color scheme
     const colorPalette = {
-        'Assignment': { border: '#bb86fc', bg: 'rgba(187, 134, 252, 0.15)' },  // Purple
-        'Quiz': { border: '#03dac6', bg: 'rgba(3, 218, 198, 0.15)' },  // Teal
-        'Exam': { border: '#cf6679', bg: 'rgba(207, 102, 121, 0.15)' },  // Accent pink
-        'Lab': { border: '#ff8c00', bg: 'rgba(255, 140, 0, 0.15)' },  // Orange
-        'Project': { border: '#ffaf7b', bg: 'rgba(255, 175, 123, 0.15)' },  // Light orange
-        'Midterm': { border: '#d76d77', bg: 'rgba(215, 109, 119, 0.15)' },  // Gradient red
-        'Final': { border: '#3a1c71', bg: 'rgba(58, 28, 113, 0.15)' }  // Gradient purple
+        'Assignment': { border: '#121417', bg: 'rgba(18, 20, 23, 0.07)' },
+        'Quiz':       { border: '#3D4249', bg: 'rgba(61, 66, 73, 0.07)' },
+        'Midterm':    { border: '#5B616B', bg: 'rgba(91, 97, 107, 0.07)' },
+        'Final':      { border: '#7A8290', bg: 'rgba(122, 130, 144, 0.07)' },
+        'Project':    { border: '#9EA4AB', bg: 'rgba(158, 164, 171, 0.07)' },
+        'Lab':        { border: '#2A2E35', bg: 'rgba(42, 46, 53, 0.07)' },
+        'Exam':       { border: '#4A5058', bg: 'rgba(74, 80, 88, 0.07)' }
     };
 
     // Get all unique semesters across all types
@@ -570,15 +553,15 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
             borderColor: colors.border,
             backgroundColor: colors.bg,
             tension: 0.4,
-            fill: true, // Fill area for overlapping lines
+            fill: false,
             pointRadius: 5,
             pointHoverRadius: 7,
             pointBackgroundColor: colors.border,
-            pointBorderColor: '#fff',
+            pointBorderColor: '#FFFFFF',
             pointBorderWidth: 2,
             pointHoverBackgroundColor: colors.border,
-            pointHoverBorderColor: '#fff',
-            borderWidth: 2.5,
+            pointHoverBorderColor: '#FFFFFF',
+            borderWidth: 2,
             spanGaps: false
         };
     });
@@ -624,32 +607,25 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
                     display: true,
                     position: 'top',
                     labels: {
-                        font: {
-                            size: 14,
-                            weight: '600'
-                        },
-                        color: '#e0e0e0',
-                        padding: 15
+                        font: { size: 13, weight: '600' },
+                        color: '#2A2E35',
+                        padding: 15,
+                        usePointStyle: true
                     }
                 },
                 title: {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: 'rgba(30, 30, 30, 0.95)',
-                    titleColor: '#ff8c00',
-                    bodyColor: '#e0e0e0',
-                    borderColor: '#ff8c00',
-                    borderWidth: 2,
+                    backgroundColor: '#FFFFFF',
+                    titleColor: '#121417',
+                    bodyColor: '#5B616B',
+                    borderColor: '#C8CCD2',
+                    borderWidth: 1,
                     padding: 12,
-                    cornerRadius: 8,
-                    titleFont: {
-                        size: 14,
-                        weight: 'bold'
-                    },
-                    bodyFont: {
-                        size: 13
-                    },
+                    cornerRadius: 6,
+                    titleFont: { size: 13, weight: 'bold' },
+                    bodyFont: { size: 12 },
                     callbacks: {
                         label: function (context) {
                             const label = context.dataset.label || '';
@@ -667,10 +643,8 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
                     max: 100,
                     ticks: {
                         stepSize: 10,
-                        color: '#e0e0e0',
-                        font: {
-                            size: 12
-                        },
+                        color: '#5B616B',
+                        font: { size: 12 },
                         callback: function (value) {
                             return value + '%';
                         }
@@ -678,35 +652,30 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
                     title: {
                         display: true,
                         text: 'Average Score (%)',
-                        color: '#ff8c00',
-                        font: {
-                            size: 14,
-                            weight: '600'
-                        }
+                        color: '#2A2E35',
+                        font: { size: 13, weight: '600' }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.08)',
+                        color: 'rgba(42, 46, 53, 0.1)',
                         drawBorder: false
                     }
                 },
                 x: {
                     ticks: {
-                        color: '#e0e0e0',
-                        font: {
-                            size: 12
-                        }
+                        color: '#5B616B',
+                        font: { size: 12 }
                     },
                     title: {
                         display: true,
                         text: 'Semester',
-                        color: '#ff8c00',
+                        color: '#2A2E35',
                         font: {
                             size: 14,
                             weight: '600'
                         }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.05)',
+                        color: 'rgba(42, 46, 53, 0.06)',
                         drawBorder: false
                     }
                 }

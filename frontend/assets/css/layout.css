@@ -6,10 +6,21 @@
     border-bottom: 1px solid var(--border-color);
 }
 
-.navbar-brand {
-    font-weight: bold;
+.navbar-brand,
+.navbar-text,
+.navbar .btn {
     color: var(--text-color) !important;
     -webkit-text-fill-color: var(--text-color);
+}
+
+.navbar .btn-outline-light {
+    color: var(--text-color) !important;
+    border-color: var(--border-color) !important;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: var(--bg-color) !important;
+    color: var(--text-color) !important;
 }
 
 /* Main Container */
@@ -31,15 +42,15 @@ footer {
     text-align: center;
     width: 100%;
     padding: 14px 0;
-    color: var(--text-muted) !important;
+    color: var(--muted-color) !important;
     background: var(--surface-color) !important;
     border-top: 1px solid var(--border-color);
     margin-top: auto;
+    font-size: 0.85rem;
 }
 
-/* Responsive Fixes */
+/* Override Bootstrap bg classes to use our palette */\nbg-primary,\n.bg-primary {\n    background-color: var(--primary-color) !important;\n}\n\n.navbar-dark .navbar-brand,\n.navbar-dark .navbar-text,\n.navbar-dark .navbar-toggler-icon,\n.navbar-dark .nav-link {\n    color: var(--text-color) !important;\n}\n\n/* Responsive */
 @media (max-width: 768px) {
-
     .row.justify-content-center .col-md-5,
     .col-md-5 {
         flex: 0 0 100%;
