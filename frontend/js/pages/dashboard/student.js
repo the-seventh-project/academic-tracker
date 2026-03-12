@@ -30,11 +30,41 @@ window.onload = async () => {
     await loadDashboardData(user.id);
 };
 
-async function loadDashboardData() {
+async function loadDashboardData(retryCount = 0) {
+    // Use a health-check ping to detect cold-start before loading data
+    let serverReady = false;
+    try {
+        await window.API.get('/');
+        serverReady = true;
+    } catch (e) {
+        serverReady = false;
+    }
+
+    if (!serverReady && retryCount < 4) {
+        const banner = document.getElementById('serverStartupBanner');
+        const countdown = document.getElementById('retryCountdown');
+        if (banner) banner.classList.remove('d-none');
+
+        const delay = 15000;
+        let remaining = delay / 1000;
+        const timer = setInterval(() => {
+            remaining--;
+            if (countdown) countdown.textContent = `(retrying in ${remaining}s)`;
+            if (remaining <= 0) clearInterval(timer);
+        }, 1000);
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+        clearInterval(timer);
+        return loadDashboardData(retryCount + 1);
+    }
+
+    // Hide banner once server is ready
+    const banner = document.getElementById('serverStartupBanner');
+    if (banner) banner.classList.add('d-none');
+
     await loadWeather();
     await loadGPA();
     await loadCourses();
-    // Load all assessment types trend by default
     await loadAllAssessmentTypesTrend();
 }
 
@@ -52,38 +82,53 @@ async function loadWeather() {
 }
 
 async function loadGPA() {
+    let gpaData = null;
+    let courses = [];
+
+    // 1. Fetch GPA data
     try {
-        const response = await fetch(`${window.API_URL}/api/calculate-gpa/${currentUser.id}`);
-        const data = await response.json();
-
-        // store per-course grades for the courses table
-        courseGrades = data.course_grades || [];
-
-        // Fetch courses to calculate semester-by-semester GPA
-        const coursesResponse = await fetch(`${window.API_URL}/api/courses/${currentUser.id}`);
-        const courses = await coursesResponse.json();
-
-        // Get unique semesters and calculate GPA for each
-        const semesterGPAs = calculateSemesterGPAs(courses, courseGrades);
-
-        // Use the most recent semester's GPA for the "Semester GPA" card
-        const latestSemGPA = semesterGPAs.length > 0 ? semesterGPAs[semesterGPAs.length - 1].gpa : 0;
-
-        // Update display
-        const semEl = document.getElementById('semesterGPA');
-        const cumEl = document.getElementById('cumulativeGPA');
-        const hasGrades = courseGrades && courseGrades.length > 0;
-        if (semEl) semEl.textContent = hasGrades ? latestSemGPA.toFixed(2) : '—';
-        if (cumEl) cumEl.textContent = hasGrades ? data.cumulative_gpa.toFixed(2) : '—';
-
-        // Calculate total credits from ALL enrolled courses (not just graded)
-        const totalCredits = courses.reduce((sum, course) => sum + (Number(course.credit_hours) || 0), 0);
-        const creditsEl = document.getElementById('totalCredits');
-        if (creditsEl) creditsEl.textContent = totalCredits;
-
-        createGPAChart(semesterGPAs);
+        gpaData = await window.API.get(`/api/calculate-gpa/${currentUser.id}`);
+        courseGrades = gpaData.course_grades || [];
     } catch (error) {
         console.error('GPA calculation error:', error);
+        courseGrades = [];
+    }
+
+    // 2. Fetch courses
+    try {
+        courses = await window.API.get(`/api/courses/${currentUser.id}`);
+        if (!Array.isArray(courses)) courses = [];
+    } catch (error) {
+        console.error('Error fetching courses for GPA:', error);
+        courses = [];
+    }
+
+    // 3. Render (always runs even if APIs failed)
+    try {
+        const semesterGPAs = calculateSemesterGPAs(courses, courseGrades);
+        const latestSem = semesterGPAs.length > 0 ? semesterGPAs[semesterGPAs.length - 1] : null;
+        const latestSemGPA = latestSem ? latestSem.gpa : 0;
+
+        const semEl = document.getElementById('semesterGPA');
+        const cumEl = document.getElementById('cumulativeGPA');
+        const semLabelEl = document.getElementById('currentSemester');
+        const hasGrades = courseGrades && courseGrades.length > 0;
+
+        if (semEl) semEl.textContent = hasGrades ? Number(latestSemGPA || 0).toFixed(2) : '—';
+        if (cumEl) cumEl.textContent = hasGrades ? Number(gpaData?.cumulative_gpa ?? 0).toFixed(2) : '—';
+        if (semLabelEl) semLabelEl.textContent = latestSem ? latestSem.semester : '—';
+
+        const totalCredits = courses.reduce((sum, course) => sum + (Number(course.credit_hours) || 0), 0);
+        const creditsEl = document.getElementById('totalCredits');
+        if (creditsEl) creditsEl.textContent = totalCredits > 0 ? totalCredits : '—';
+
+        try {
+            createGPAChart(semesterGPAs);
+        } catch (chartErr) {
+            console.error('Error rendering GPA chart:', chartErr);
+        }
+    } catch (error) {
+        console.error('Error rendering GPA data:', error);
     }
 }
 
@@ -231,6 +276,14 @@ function calculateSemesterGPAs(courses, courseGrades) {
     return result;
 }
 
+/**
+ * Shorten semester labels: 'Fall 2026' → "Fall '26"
+ */
+function shortenSemester(label) {
+    if (!label) return label;
+    return label.replace(/(\d{4})$/, (_, y) => "'" + y.slice(2));
+}
+
 function createGPAChart(semesterGPAs) {
     const ctx = document.getElementById('gpaChart');
     if (!ctx) return;
@@ -242,7 +295,7 @@ function createGPAChart(semesterGPAs) {
     }
 
     // Extract labels and data from semesterGPAs
-    const labels = semesterGPAs.map(s => s.semester);
+    const labels = semesterGPAs.map(s => shortenSemester(s.semester));
     const data = semesterGPAs.map(s => s.gpa);
 
     // If no data, show a message
@@ -274,7 +327,7 @@ function createGPAChart(semesterGPAs) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             animation: {
                 duration: 1200,
                 easing: 'easeInOutQuart'
@@ -314,7 +367,8 @@ function createGPAChart(semesterGPAs) {
                     bodyFont: { size: 12 },
                     callbacks: {
                         label: function (context) {
-                            return 'GPA: ' + context.parsed.y.toFixed(2);
+                            const val = context.parsed.y;
+                            return 'GPA: ' + (val != null ? val.toFixed(2) : '—');
                         }
                     }
                 }
@@ -335,8 +389,8 @@ function createGPAChart(semesterGPAs) {
                         font: { size: 13, weight: '600' }
                     },
                     grid: {
-                        color: 'rgba(42, 46, 53, 0.1)',
-                        drawBorder: false
+                        color: 'rgba(42, 46, 53, 0.12)',
+                        drawBorder: true
                     }
                 },
                 x: {
@@ -351,8 +405,8 @@ function createGPAChart(semesterGPAs) {
                         font: { size: 13, weight: '600' }
                     },
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.05)',
-                        drawBorder: false
+                        color: 'rgba(42, 46, 53, 0.08)',
+                        drawBorder: true
                     }
                 }
             }
@@ -540,7 +594,7 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
             borderColor: colors.border,
             backgroundColor: colors.bg,
             tension: 0.4,
-            fill: false,
+            fill: true,
             pointRadius: 5,
             pointHoverRadius: 7,
             pointBackgroundColor: colors.border,
@@ -558,6 +612,9 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
         sortedSemesters.push('No Data');
     }
 
+    // Shorten labels before rendering
+    const displayLabels = sortedSemesters.map(s => s === 'No Data' ? s : shortenSemester(s));
+
     // Create chart title based on selection
     const chartTitle = selectedType
         ? `${selectedType} Performance Trend`
@@ -567,12 +624,12 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
     assessmentTypeTrendChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: sortedSemesters,
+            labels: displayLabels,
             datasets: datasets
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             animation: {
                 duration: 1500,
                 easing: 'easeInOutQuart'
@@ -643,8 +700,8 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
                         font: { size: 13, weight: '600' }
                     },
                     grid: {
-                        color: 'rgba(42, 46, 53, 0.1)',
-                        drawBorder: false
+                        color: 'rgba(42, 46, 53, 0.12)',
+                        drawBorder: true
                     }
                 },
                 x: {
@@ -662,8 +719,8 @@ function renderAssessmentTypeTrendChart(typeDataArray, selectedType) {
                         }
                     },
                     grid: {
-                        color: 'rgba(42, 46, 53, 0.06)',
-                        drawBorder: false
+                        color: 'rgba(42, 46, 53, 0.08)',
+                        drawBorder: true
                     }
                 }
             },

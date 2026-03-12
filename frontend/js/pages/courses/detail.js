@@ -182,7 +182,7 @@ document.getElementById('editCourseBtn')?.addEventListener('click', async () => 
 
         new bootstrap.Modal(document.getElementById('editCourseModal')).show();
     } catch (err) {
-        Notify.error('Failed to load course details for editing.');
+        alert('Failed to load course details');
     }
 });
 
@@ -203,7 +203,7 @@ document.getElementById('editCourseForm')?.addEventListener('submit', async (e) 
         try { localStorage.setItem('courses_updated', Date.now().toString()); } catch (e) { }
         location.reload();
     } catch (err) {
-        Notify.error('Failed to update course: ' + err.message);
+        alert('Failed to update course: ' + err.message);
     }
 });
 
@@ -217,7 +217,7 @@ document.getElementById('assessmentForm')?.addEventListener('submit', async (e) 
 
     // Validate earned marks cannot exceed total marks
     if (earnedMarks !== null && earnedMarks > totalMarks) {
-        Notify.error(`Earned marks (${earnedMarks}) cannot exceed total marks (${totalMarks}).`);
+        alert(`Earned marks (${earnedMarks}) cannot be greater than total marks (${totalMarks})!`);
         return;
     }
 
@@ -232,7 +232,7 @@ document.getElementById('assessmentForm')?.addEventListener('submit', async (e) 
     // Check if adding this weight would exceed 100%
     if (newTotalWeight > 100) {
         const maxAllowed = 100 - currentWeightInForm;
-        Notify.warning(`Total weight cannot exceed 100%. Max you can add: ${maxAllowed.toFixed(2)}% (entered: ${weightValue}%)`);
+        alert(`Total weight cannot exceed 100%!\n\nCurrent total: ${currentWeightInForm.toFixed(2)}%\nMaximum you can add: ${maxAllowed.toFixed(2)}%\nYou entered: ${weightValue}%`);
         return;
     }
 
@@ -252,11 +252,11 @@ document.getElementById('assessmentForm')?.addEventListener('submit', async (e) 
             url = `/api/update-assessment/${currentAssessmentId}`;
         }
 
-        await window.API.post(url, data);
+        await window.API.post(url, payload);
         bootstrap.Modal.getInstance(document.getElementById('addAssessmentModal')).hide();
         loadCourseDetails();
     } catch (error) {
-        Notify.error('Error saving assessment: ' + error.message);
+        alert('Error saving assessment: ' + error.message);
     }
 });
 
@@ -358,15 +358,8 @@ async function deleteAssessment(id) {
         // Checking app.py content from memory: I recall /delete-course but not /delete-assessment.
         // I will add the endpoint to app.py as well to be safe.
 
-        const response = await fetch(`${window.API_URL}/api/delete-assessment/${id}`, {
-            method: 'DELETE'
-        });
-
-        if (response.ok) {
-            await loadCourseDetails();
-        } else {
-            Notify.error('Failed to delete assessment.');
-        }
+        await window.API.delete(`/api/delete-assessment/${id}`);
+        await loadCourseDetails();
     } catch (error) {
         console.error('Error:', error);
     }

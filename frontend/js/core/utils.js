@@ -114,9 +114,9 @@ const Notify = {
     show(message, type = 'info', duration = 4500) {
         const palette = {
             success: { bg: '#f0fdf4', border: '#86efac', text: '#14532d', icon: '✓' },
-            error:   { bg: '#fef2f2', border: '#fca5a5', text: '#7f1d1d', icon: '✕' },
+            error: { bg: '#fef2f2', border: '#fca5a5', text: '#7f1d1d', icon: '✕' },
             warning: { bg: '#fffbeb', border: '#fcd34d', text: '#78350f', icon: '!' },
-            info:    { bg: '#f0f9ff', border: '#7dd3fc', text: '#0c4a6e', icon: 'i' }
+            info: { bg: '#f0f9ff', border: '#7dd3fc', text: '#0c4a6e', icon: 'i' }
         };
         const c = palette[type] || palette.info;
         const container = this._getContainer();
@@ -154,9 +154,9 @@ const Notify = {
     },
 
     success(message, duration) { this.show(message, 'success', duration); },
-    error(message, duration)   { this.show(message, 'error',   duration); },
+    error(message, duration) { this.show(message, 'error', duration); },
     warning(message, duration) { this.show(message, 'warning', duration); },
-    info(message, duration)    { this.show(message, 'info',    duration); }
+    info(message, duration) { this.show(message, 'info', duration); }
 };
 
 if (typeof window !== 'undefined') {

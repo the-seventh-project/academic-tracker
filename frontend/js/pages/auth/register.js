@@ -20,7 +20,7 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
                 window.location.href = 'login.html';
             }, 1000);
         } else {
-            showError(data.error || 'Failed to register');
+            showError(data.message || data.error || 'Failed to register');
         }
     } catch (error) {
         showError(error.message || 'Cannot connect to server');

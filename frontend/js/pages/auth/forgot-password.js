@@ -10,7 +10,7 @@ document.getElementById('resetForm').addEventListener('submit', async (e) => {
     try {
         const data = await window.API.post('/api/auth/reset-password', {
             email: email,
-            newPassword: newPassword
+            new_password: newPassword
         });
 
         if (data.success) {
@@ -19,7 +19,7 @@ document.getElementById('resetForm').addEventListener('submit', async (e) => {
                 window.location.href = 'login.html';
             }, 1500);
         } else {
-            showError(data.error || 'Failed to reset password');
+            showError(data.message || data.error || 'Failed to reset password');
         }
     } catch (error) {
         showError(error.message || 'Cannot connect to server');

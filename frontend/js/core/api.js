@@ -24,19 +24,21 @@ const API = {
             }
         };
 
+        // Default 15s timeout, allows override (e.g., 30s for POST)
+        const controller = new AbortController();
+        const timeoutMs = options.timeout || 15000;
+        const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+        mergedOptions.signal = controller.signal;
+
         try {
             const response = await fetch(url, mergedOptions);
+            clearTimeout(timeoutId);
 
-            // Guard JSON parse — Render (free tier) can return HTML on cold-start/503
             let data;
             try {
                 data = await response.json();
             } catch (parseError) {
-                // Non-JSON response (HTML error page, gateway timeout, etc.)
-                const hint = (mergedOptions.method === 'POST' || mergedOptions.method === 'PUT')
-                    ? ' If you just submitted data, check your dashboard — it may still have been saved.'
-                    : '';
-                throw new Error(`Server returned an unexpected response (HTTP ${response.status}).${hint}`);
+                throw new Error(`Server returned an unexpected response (HTTP ${response.status}). The server may be starting up — please try again in a moment.`);
             }
 
             if (!response.ok) {
@@ -45,25 +47,46 @@ const API = {
 
             return data;
         } catch (error) {
+            clearTimeout(timeoutId);
+            if (error.name === 'AbortError') {
+                throw new Error('Request timed out. The server may be starting up — please wait a moment and try again.');
+            }
             console.error(`API Error (${endpoint}):`, error);
             throw error;
         }
     },
 
     /**
-     * GET request helper
+     * Wrapper that retries on failure with exponential backoff.
+     * Useful for cold-start scenarios where the first request may fail.
+     */
+    async fetchWithRetry(endpoint, options = {}, maxRetries = 2) {
+        for (let attempt = 0; attempt <= maxRetries; attempt++) {
+            try {
+                return await this.fetch(endpoint, options);
+            } catch (error) {
+                if (attempt === maxRetries) throw error;
+                await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+            }
+        }
+    },
+
+    /**
+     * GET request helper (uses retry for cold-start resilience)
      */
     async get(endpoint) {
-        return this.fetch(endpoint, { method: 'GET' });
+        return this.fetchWithRetry(endpoint, { method: 'GET' });
     },
 
     /**
      * POST request helper
+     * Uses a longer timeout rather than retrying, because POSTs are not idempotent
      */
     async post(endpoint, body) {
         return this.fetch(endpoint, {
             method: 'POST',
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
+            timeout: 30000
         });
     },
 
