@@ -9,61 +9,56 @@ body {
     min-height: 100vh;
 }
 
-/* Links in dark mode */
+/* Links */
 a {
-    color: #03dac6;
+    color: var(--primary-color);
 }
 
 a:hover {
-    color: #bb86fc;
+    color: var(--muted-color);
 }
 
 /* Fix text visibility */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-label,
-span,
-div {
+h1, h2, h3, h4, h5, h6, p, label, span, div {
     color: var(--text-color);
 }
 
 /* Input Placeholders */
 ::placeholder {
-    color: #888 !important;
+    color: var(--muted-color) !important;
     opacity: 1;
 }
 
 /* Base Table Overrides */
 .table thead th {
-    background-color: var(--surface-color);
-    color: var(--text-muted) !important;
+    background-color: var(--bg-color);
+    color: var(--muted-color) !important;
     border-bottom: 2px solid var(--border-color);
     text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
 }
 
 .table {
     background-color: var(--surface-color) !important;
     color: var(--text-color) !important;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
 .table td {
     color: var(--text-color) !important;
     font-weight: 500;
     text-align: center;
+    border-color: var(--border-color);
 }
 
 .table-hover tbody tr:hover {
-    color: var(--text-color) !important;
-    background-color: rgba(200, 204, 210, 0.08) !important;
+    background-color: var(--bg-color) !important;
 }
 
-/* Hide number input spinners */
+/* Hide number spinners */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;

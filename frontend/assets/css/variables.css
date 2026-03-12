@@ -1,16 +1,16 @@
 :root {
-    /* Academic Tracker Color Palette */
-    --bg-color:      #121417;
-    --surface-color: #2A2E35;
-    --card-bg:       #2A2E35;
+    /* Academic Tracker — Light Color Palette */
+    --bg-color:      #F7F7F8;
+    --surface-color: #FFFFFF;
+    --card-bg:       #FFFFFF;
     --muted-color:   #5B616B;
-    --text-muted:    #C8CCD2;
-    --text-color:    #F7F7F8;
+    --text-muted:    #5B616B;
+    --text-color:    #121417;
 
     /* Semantic Aliases */
-    --primary-color:   #C8CCD2;
-    --secondary-color: #F7F7F8;
+    --primary-color:   #2A2E35;
+    --secondary-color: #121417;
     --accent-color:    #5B616B;
-    --input-bg:        #2A2E35;
-    --border-color:    #5B616B;
+    --input-bg:        #F7F7F8;
+    --border-color:    #C8CCD2;
 }
