@@ -26,10 +26,21 @@ const API = {
 
         try {
             const response = await fetch(url, mergedOptions);
-            const data = await response.json();
+
+            // Guard JSON parse — Render (free tier) can return HTML on cold-start/503
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                // Non-JSON response (HTML error page, gateway timeout, etc.)
+                const hint = (mergedOptions.method === 'POST' || mergedOptions.method === 'PUT')
+                    ? ' If you just submitted data, check your dashboard — it may still have been saved.'
+                    : '';
+                throw new Error(`Server returned an unexpected response (HTTP ${response.status}).${hint}`);
+            }
 
             if (!response.ok) {
-                throw new Error(data.message || `HTTP Error ${response.status}`);
+                throw new Error(data.message || data.error || `Request failed (HTTP ${response.status})`);
             }
 
             return data;

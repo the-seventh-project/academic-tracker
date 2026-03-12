@@ -182,7 +182,7 @@ document.getElementById('editCourseBtn')?.addEventListener('click', async () => 
 
         new bootstrap.Modal(document.getElementById('editCourseModal')).show();
     } catch (err) {
-        alert('Failed to load course details');
+        Notify.error('Failed to load course details for editing.');
     }
 });
 
@@ -203,7 +203,7 @@ document.getElementById('editCourseForm')?.addEventListener('submit', async (e) 
         try { localStorage.setItem('courses_updated', Date.now().toString()); } catch (e) { }
         location.reload();
     } catch (err) {
-        alert('Failed to update course: ' + err.message);
+        Notify.error('Failed to update course: ' + err.message);
     }
 });
 
@@ -217,7 +217,7 @@ document.getElementById('assessmentForm')?.addEventListener('submit', async (e) 
 
     // Validate earned marks cannot exceed total marks
     if (earnedMarks !== null && earnedMarks > totalMarks) {
-        alert(`Earned marks (${earnedMarks}) cannot be greater than total marks (${totalMarks})!`);
+        Notify.error(`Earned marks (${earnedMarks}) cannot exceed total marks (${totalMarks}).`);
         return;
     }
 
@@ -232,7 +232,7 @@ document.getElementById('assessmentForm')?.addEventListener('submit', async (e) 
     // Check if adding this weight would exceed 100%
     if (newTotalWeight > 100) {
         const maxAllowed = 100 - currentWeightInForm;
-        alert(`Total weight cannot exceed 100%!\n\nCurrent total: ${currentWeightInForm.toFixed(2)}%\nMaximum you can add: ${maxAllowed.toFixed(2)}%\nYou entered: ${weightValue}%`);
+        Notify.warning(`Total weight cannot exceed 100%. Max you can add: ${maxAllowed.toFixed(2)}% (entered: ${weightValue}%)`);
         return;
     }
 
@@ -256,7 +256,7 @@ document.getElementById('assessmentForm')?.addEventListener('submit', async (e) 
         bootstrap.Modal.getInstance(document.getElementById('addAssessmentModal')).hide();
         loadCourseDetails();
     } catch (error) {
-        alert('Error saving assessment: ' + error.message);
+        Notify.error('Error saving assessment: ' + error.message);
     }
 });
 
@@ -365,7 +365,7 @@ async function deleteAssessment(id) {
         if (response.ok) {
             await loadCourseDetails();
         } else {
-            alert('Failed to delete assessment');
+            Notify.error('Failed to delete assessment.');
         }
     } catch (error) {
         console.error('Error:', error);
