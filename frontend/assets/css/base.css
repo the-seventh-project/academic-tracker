@@ -1,5 +1,9 @@
 /* Base Styles & Resets */
 
+html {
+    color-scheme: light;
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
@@ -12,6 +16,13 @@ body {
 /* Single font family across all elements */
 *, *::before, *::after {
     font-family: var(--font-family);
+}
+
+/* Force all form elements to use our color scheme */
+input, select, textarea, option, optgroup {
+    color: var(--text-color) !important;
+    background-color: var(--input-bg) !important;
+    font-family: var(--font-family) !important;
 }
 
 /* Links */

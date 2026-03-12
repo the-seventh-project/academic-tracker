@@ -26,9 +26,9 @@
     color: var(--text-color) !important;
 }
 
-/* Glass Panel */
+/* Flat Panel (replaces previous glass-panel) */
 .glass-panel {
-    background: rgba(18, 20, 23, 0.02);
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     border-radius: 10px;
     padding: 20px;
@@ -49,14 +49,28 @@
 }
 
 .btn-light {
-    background: var(--bg-color);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+    background: var(--bg-color) !important;
+    color: var(--text-color) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
 .btn-light:hover {
-    background: var(--border-color);
-    color: var(--text-color);
+    background: var(--border-color) !important;
+    color: var(--text-color) !important;
+}
+
+/* Gray focus ring — override Bootstrap's blue */
+.btn:focus-visible,
+.btn:focus {
+    box-shadow: 0 0 0 0.25rem rgba(42, 46, 53, 0.2) !important;
+    outline: none !important;
+}
+
+.btn-outline-secondary:hover,
+.btn-secondary {
+    background-color: var(--muted-color) !important;
+    border-color: var(--muted-color) !important;
+    color: #F7F7F8 !important;
 }
 
 /* Bubble Button */
@@ -157,105 +171,26 @@
 #cumulativeGPA,
 #totalCredits,
 #currentSemester {
-    color: var(--primary-color) !important;
+    color: var(--text-color) !important;
     font-weight: 700;
 }
 
-/* --- Dashboard Feature Cards --- */
-.features-container .feature-card {
-    background: #000 !important;
-    color: #fff !important;
-    text-decoration: none;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
-    transition: background 0.25s ease, transform 0.18s ease, box-shadow 0.18s ease;
-    display: block;
-}
 
-.features-container .feature-card h2 {
-    background: linear-gradient(45deg, #bb86fc, #03dac6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent !important;
-    font-weight: 800;
-}
-
-.features-container .feature-card p {
-    color: rgba(255, 255, 255, 0.88) !important;
-}
-
-.features-container .feature-card:hover {
-    background: linear-gradient(135deg, #6200ea, #03dac6) !important;
-    box-shadow: 0 10px 40px rgba(80, 34, 180, 0.35) !important;
-    transform: translateY(-6px);
-}
-
-.features-row .feature-card {
-    /* Alternative style used in some versions */
-    background: linear-gradient(135deg, #6200ea, #03dac6);
-    padding: 3px;
-    border-radius: 14px;
-    text-decoration: none;
-    transition: all .22s ease;
-}
-
-.features-row .feature-card .card-body {
-    background: #000;
-    border-radius: 11px;
-    padding: 1.5rem;
-    color: #fff;
-    min-height: 140px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.features-row .feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.45);
-    background: linear-gradient(90deg, #7b61ff 0%, #00f0c6 100%);
-}
-
-.features-row {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-}
-
-@media (max-width: 992px) {
-    .features-row {
-        flex-wrap: wrap;
-    }
-
-    .features-row .feature-card {
-        flex: 1 1 calc(50% - 1rem);
-    }
-}
-
-@media (max-width: 576px) {
-    .features-row .feature-card {
-        flex: 1 1 100%;
-    }
-}
 
 /* --- Assessment Type Selector & Toggles --- */
 #assessmentTypeSelector {
-    background: linear-gradient(135deg, #ff8c00 0%, #ffa500 100%) !important;
-    border: none !important;
-    color: white !important;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
+    background-color: var(--input-bg) !important;
+    background-image: none !important;
+    border: 1px solid var(--border-color) !important;
+    color: var(--text-color) !important;
+    font-weight: 500;
+    padding: 0.375rem 0.75rem;
     border-radius: 0.375rem;
-    text-align: center;
 }
 
 #assessmentTypeSelector option {
-    background-color: #2c2c2c !important;
-    color: white !important;
+    background-color: var(--surface-color) !important;
+    color: var(--text-color) !important;
 }
 
 .switch {
@@ -309,15 +244,16 @@ input:checked+.slider:before {
     border-radius: 50%;
 }
 
-/* --- My Courses Card Specifics --- */
+/* --- My Courses Card --- */
 .my-courses-card {
     background-color: var(--card-bg) !important;
-    border: 1px solid rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid var(--border-color) !important;
 }
 
 .my-courses-card .card-header,
 .my-courses-card .card-header * {
-    color: #fff !important;
+    color: var(--text-color) !important;
+    -webkit-text-fill-color: var(--text-color) !important;
 }
 
 .my-courses-card .table {
@@ -330,20 +266,14 @@ input:checked+.slider:before {
 .my-courses-card .table th {
     background-color: transparent !important;
     color: var(--text-color) !important;
-    border-color: rgba(255, 255, 255, 0.06) !important;
+    border-color: var(--border-color) !important;
 }
 
-.my-courses-card .btn-light {
-    background: rgba(255, 255, 255, 0.04) !important;
-    color: #fff !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-}
-
-/* Card Tables (Dark Mode Override) */
+/* Card Tables */
 .card .table,
 .card .table th,
 .card .table td {
     background-color: transparent !important;
     color: var(--text-color) !important;
-    border-color: rgba(255, 255, 255, 0.06) !important;
+    border-color: var(--border-color) !important;
 }
