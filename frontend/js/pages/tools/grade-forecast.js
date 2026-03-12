@@ -42,7 +42,7 @@ async function runAnalysis() {
     const targetGrade = parseFloat(document.getElementById('targetGrade').value);
 
     if (isNaN(targetGrade) || targetGrade < 0 || targetGrade > 100) {
-        alert("Please enter a valid target grade (0-100)");
+        Notify.warning('Please enter a valid target grade (0–100).');
         return;
     }
 
@@ -51,7 +51,7 @@ async function runAnalysis() {
     // Validate Total Weight
     const totalWeight = assessments.reduce((sum, a) => sum + (a.weight || 0), 0);
     if (Math.abs(totalWeight - 100) > 0.1) {
-        alert(`Total weight must be 100%. Current: ${totalWeight.toFixed(2)}%`);
+        Notify.warning(`Total weight must be 100%. Current: ${totalWeight.toFixed(2)}%`);
         return;
     }
 
@@ -60,11 +60,11 @@ async function runAnalysis() {
         window.AssessmentTable.renderResults(result.assessments, targetGrade);
 
         if (result.target_analysis?.status === 'Impossible') {
-            alert("Note: The target grade is mathematically impossible with current known marks.");
+            Notify.warning('Note: The target grade is mathematically impossible with the current known marks.');
         }
 
     } catch (error) {
         console.error(error);
-        alert("Error running analysis: " + error.message);
+        Notify.error('Error running analysis: ' + error.message);
     }
 }

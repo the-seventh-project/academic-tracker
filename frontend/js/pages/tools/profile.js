@@ -137,14 +137,14 @@ async function saveInformation() {
 
     // Basic validation
     if (!studentId || !major || !level) {
-        showMessage('Please fill in all fields.', 'danger');
+        Notify.warning('Please fill in all fields.');
         return;
     }
 
     // Get user ID
     const userData = localStorage.getItem('user');
     if (!userData) {
-        showMessage('Not logged in.', 'danger');
+        Notify.error('Not logged in.');
         return;
     }
     const user = JSON.parse(userData);
@@ -162,28 +162,14 @@ async function saveInformation() {
         });
 
         if (result.success) {
-            showMessage('Profile saved successfully!', 'success');
+            Notify.success('Profile saved successfully!');
         } else {
-            showMessage('Save failed: ' + (result.error || 'Unknown server error'), 'danger');
+            Notify.error('Save failed: ' + (result.error || 'Unknown server error'));
         }
     } catch (error) {
         console.warn('Could not save to API:', error);
-        showMessage('Could not reach server. Your info was saved locally as a backup.', 'warning');
+        Notify.warning('Could not reach server. Your info was saved locally as a backup.');
     }
-}
-
-function showMessage(message, type) {
-    const messageEl = document.getElementById('saveMessage');
-    if (!messageEl) return;
-
-    messageEl.className = `alert alert-${type} mt-3`;
-    messageEl.textContent = message;
-    messageEl.style.display = 'block';
-
-    // Hide message after 3 seconds
-    setTimeout(() => {
-        messageEl.style.display = 'none';
-    }, 3000);
 }
 
 function logout() {

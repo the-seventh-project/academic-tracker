@@ -1,5 +1,5 @@
 // Add Course Page Script
-// Depends on: core/config.js, core/auth.js
+// Depends on: core/config.js, core/auth.js, core/utils.js
 
 let currentUser = null;
 
@@ -15,9 +15,6 @@ window.onload = () => {
 document.getElementById('addCourseForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Clear any stale messages and disable button
-    document.getElementById('successMessage').style.display = 'none';
-    document.getElementById('errorMessage').style.display = 'none';
     const submitBtn = e.target.querySelector('button[type="submit"]');
     if (submitBtn) submitBtn.disabled = true;
 
@@ -34,7 +31,8 @@ document.getElementById('addCourseForm')?.addEventListener('submit', async (e) =
         );
 
         if (duplicateCourse) {
-            alert(`Course code "${courseCode}" already exists!\nCourse: ${duplicateCourse.course_name}\n\nPlease use a different course code.`);
+            if (submitBtn) submitBtn.disabled = false;
+            Notify.warning(`Course code "${courseCode}" already exists (${duplicateCourse.course_name}). Please use a different code.`);
             return;
         }
     } catch (error) {
@@ -53,28 +51,16 @@ document.getElementById('addCourseForm')?.addEventListener('submit', async (e) =
         const data = await window.API.post('/api/add-course', courseData);
 
         if (data.success) {
-            showSuccess('Course added successfully! Redirecting...');
+            Notify.success('Course added successfully! Redirecting...');
             setTimeout(() => {
                 window.location.href = '../dashboard/student.html';
             }, 1500);
         } else {
             if (submitBtn) submitBtn.disabled = false;
-            showError(data.error || 'Failed to add course. Please try again.');
+            Notify.error(data.error || 'Failed to add course. Please try again.');
         }
     } catch (error) {
         if (submitBtn) submitBtn.disabled = false;
-        showError('Could not reach the server. Please check your connection and try again.');
+        Notify.error(error.message || 'Could not reach the server. Please check your connection and try again.');
     }
 });
-
-function showSuccess(message) {
-    const successDiv = document.getElementById('successMessage');
-    successDiv.textContent = message;
-    successDiv.style.display = 'block';
-}
-
-function showError(message) {
-    const errorDiv = document.getElementById('errorMessage');
-    errorDiv.textContent = message;
-    errorDiv.style.display = 'block';
-}

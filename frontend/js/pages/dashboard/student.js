@@ -4,6 +4,7 @@ let currentUser = null;
 let courseGrades = []; // populated by calculate-gpa
 let allCourses = []; // store all courses for assessment trend analysis
 let assessmentTypeTrendChartInstance = null; // store chart instance for updates
+let gpaChartInstance = null; // store GPA chart instance to destroy before recreating
 
 // Student Dashboard Controller
 // Refactored to use Services and Components.
@@ -59,43 +60,23 @@ async function loadGPA() {
         const coursesResponse = await fetch(`${window.API_URL}/api/courses/${currentUser.id}`);
         const courses = await coursesResponse.json();
 
-        // Calculate Fall semester GPA on the frontend
-        let fallGPA = 0.0;
-        let fallGradePoints = 0;
-        let fallCredits = 0;
+        // Get unique semesters and calculate GPA for each
+        const semesterGPAs = calculateSemesterGPAs(courses, courseGrades);
 
-        courses.forEach(course => {
-            // Check if semester contains "Fall" (case-insensitive)
-            if (course.semester && course.semester.toLowerCase().includes('fall')) {
-                // Find GPA for this course from courseGrades
-                const gradeData = courseGrades.find(g => g.course_code === course.course_code);
-                const gpa = gradeData && typeof gradeData.gpa !== 'undefined' ? Number(gradeData.gpa) : null;
+        // Use the most recent semester's GPA for the "Semester GPA" card
+        const latestSemGPA = semesterGPAs.length > 0 ? semesterGPAs[semesterGPAs.length - 1].gpa : 0;
 
-                if (gpa !== null && course.credit_hours) {
-                    fallGradePoints += gpa * course.credit_hours;
-                    fallCredits += course.credit_hours;
-                }
-            }
-        });
-
-        // Calculate Fall semester GPA
-        if (fallCredits > 0) {
-            fallGPA = fallGradePoints / fallCredits;
-        }
-
-        // Update display with Fall GPA for semester and backend cumulative GPA
+        // Update display
         const semEl = document.getElementById('semesterGPA');
         const cumEl = document.getElementById('cumulativeGPA');
-        if (semEl) semEl.textContent = fallGPA.toFixed(2);
-        if (cumEl) cumEl.textContent = data.cumulative_gpa.toFixed(2);
+        const hasGrades = courseGrades && courseGrades.length > 0;
+        if (semEl) semEl.textContent = hasGrades ? latestSemGPA.toFixed(2) : '—';
+        if (cumEl) cumEl.textContent = hasGrades ? data.cumulative_gpa.toFixed(2) : '—';
 
-        // Calculate total credits — parse as Number to avoid string concatenation
+        // Calculate total credits from ALL enrolled courses (not just graded)
         const totalCredits = courses.reduce((sum, course) => sum + (Number(course.credit_hours) || 0), 0);
         const creditsEl = document.getElementById('totalCredits');
         if (creditsEl) creditsEl.textContent = totalCredits;
-
-        // Get unique semesters and calculate GPA for each
-        const semesterGPAs = calculateSemesterGPAs(courses, courseGrades);
 
         createGPAChart(semesterGPAs);
     } catch (error) {
@@ -251,6 +232,12 @@ function createGPAChart(semesterGPAs) {
     const ctx = document.getElementById('gpaChart');
     if (!ctx) return;
 
+    // Destroy previous instance to avoid "Canvas already in use" error
+    if (gpaChartInstance) {
+        gpaChartInstance.destroy();
+        gpaChartInstance = null;
+    }
+
     // Extract labels and data from semesterGPAs
     const labels = semesterGPAs.map(s => s.semester);
     const data = semesterGPAs.map(s => s.gpa);
@@ -261,7 +248,7 @@ function createGPAChart(semesterGPAs) {
         data.push(0);
     }
 
-    new Chart(ctx, {
+    gpaChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
