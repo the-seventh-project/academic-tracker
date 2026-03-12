@@ -162,13 +162,13 @@ async function saveInformation() {
         });
 
         if (result.success) {
-            showMessage('Information saved successfully!', 'success');
+            showMessage('Profile saved successfully!', 'success');
         } else {
-            showMessage('Saved locally. Server: ' + (result.error || 'Unknown error'), 'warning');
+            showMessage('Save failed: ' + (result.error || 'Unknown server error'), 'danger');
         }
     } catch (error) {
         console.warn('Could not save to API:', error);
-        showMessage('Saved locally (server unavailable).', 'warning');
+        showMessage('Could not reach server. Your info was saved locally as a backup.', 'warning');
     }
 }
 

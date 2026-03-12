@@ -48,7 +48,7 @@ def home():
     return jsonify({
         "status": "online",
         "database": db_status,
-        "message": "GPA Calculator API",
+        "message": "Academic Tracker API",
         "version": "2.1.0"
     })
 
@@ -85,7 +85,7 @@ register_blueprints(app)
 
 
 if __name__ == '__main__':
-    logger.info("Starting GPA Calculator Backend...")
+    logger.info("Starting Academic Tracker Backend...")
     # Bind to 0.0.0.0 for Render/Production
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port, debug=False)

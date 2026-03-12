@@ -160,6 +160,25 @@ def create_database():
         ''', conn), ('Admin', 'User', 'admin@kpu.ca', admin_pw))
     
     conn.commit()
+
+    # --- Migrations: add columns that may not exist in older deployments ---
+    migration_columns = [
+        ("student_id", "VARCHAR(50) DEFAULT ''"),
+        ("major",      "VARCHAR(100) DEFAULT ''"),
+        ("level",      "VARCHAR(50) DEFAULT ''"),
+    ]
+    for col_name, col_def in migration_columns:
+        try:
+            if is_sqlite:
+                cursor.execute(f'ALTER TABLE "USER" ADD COLUMN {col_name} {col_def}')
+            else:
+                cursor.execute(f'ALTER TABLE "USER" ADD COLUMN IF NOT EXISTS {col_name} {col_def}')
+            conn.commit()
+            print(f"Migration: added column '{col_name}' to USER table.")
+        except Exception:
+            # Column already exists — that's fine
+            pass
+
     conn.close()
     print("Database created/verified successfully!")
     print(f"Connected to: {'SQLite' if is_sqlite else 'PostgreSQL'}")
