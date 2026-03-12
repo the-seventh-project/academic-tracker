@@ -252,7 +252,7 @@ document.getElementById('assessmentForm')?.addEventListener('submit', async (e) 
             url = `/api/update-assessment/${currentAssessmentId}`;
         }
 
-        await window.API.post(url, payload);
+        await window.API.post(url, data);
         bootstrap.Modal.getInstance(document.getElementById('addAssessmentModal')).hide();
         loadCourseDetails();
     } catch (error) {

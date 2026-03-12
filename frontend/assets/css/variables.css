@@ -8,6 +8,21 @@
     --bs-font-sans-serif: 'Segoe UI', system-ui, -apple-system, sans-serif;
     --bs-body-font-family: var(--font-family);
 
+    /* Bootstrap body color/bg overrides — prevents Bootstrap dark-mode bleed */
+    --bs-body-color: #121417;
+    --bs-body-bg: #F7F7F8;
+    --bs-link-color: #2A2E35;
+    --bs-link-hover-color: #121417;
+    --bs-link-color-rgb: 42, 46, 53;
+
+    /* Override Bootstrap's blue focus ring with gray */
+    --bs-focus-ring-color: rgba(42, 46, 53, 0.25);
+    --bs-focus-ring-width: 0.25rem;
+    --bs-btn-focus-shadow-rgb: 42, 46, 53;
+
+    /* Force light color scheme — prevents browser from applying dark mode to native form elements */
+    color-scheme: light;
+
     --bg-color: #F7F7F8;
     --surface-color: #FFFFFF;
     --card-bg: #FFFFFF;

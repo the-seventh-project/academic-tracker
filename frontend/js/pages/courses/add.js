@@ -15,6 +15,12 @@ window.onload = () => {
 document.getElementById('addCourseForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
+    // Clear any stale messages and disable button
+    document.getElementById('successMessage').style.display = 'none';
+    document.getElementById('errorMessage').style.display = 'none';
+    const submitBtn = e.target.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
     const courseCode = document.getElementById('courseCode').value.trim();
     const courseName = document.getElementById('courseName').value;
     const creditHours = parseFloat(document.getElementById('creditHours').value);
@@ -52,9 +58,11 @@ document.getElementById('addCourseForm')?.addEventListener('submit', async (e) =
                 window.location.href = '../dashboard/student.html';
             }, 1500);
         } else {
+            if (submitBtn) submitBtn.disabled = false;
             showError(data.error || 'Failed to add course. Please try again.');
         }
     } catch (error) {
+        if (submitBtn) submitBtn.disabled = false;
         showError('Could not reach the server. Please check your connection and try again.');
     }
 });
