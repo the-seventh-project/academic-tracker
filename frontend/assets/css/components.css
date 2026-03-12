@@ -4,70 +4,73 @@
 .card {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
 }
 
 .card-header {
-    background: linear-gradient(45deg, #3a1c71, #d76d77, #ffaf7b);
-    color: white;
-    border-bottom: none;
-    border-radius: 15px 15px 0 0 !important;
+    background-color: var(--surface-color);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 12px 12px 0 0 !important;
 }
 
 .card-header h2,
 .card-header h4,
 .card-header p {
-    color: white !important;
+    color: var(--text-color) !important;
 }
 
 .card-body h5 {
-    color: white !important;
+    color: var(--text-color) !important;
 }
 
 /* Glass Panel */
 .glass-panel {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(247, 247, 248, 0.03);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     padding: 20px;
 }
 
 /* --- Buttons --- */
 .btn-primary {
-    background: linear-gradient(45deg, #6200ea, #bb86fc);
-    border: none;
-    transition: transform 0.2s;
+    background-color: var(--muted-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    transition: background-color 0.2s, border-color 0.2s;
 }
 
 .btn-primary:hover {
-    transform: scale(1.05);
-    background: linear-gradient(45deg, #3700b3, #6200ea);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--bg-color);
 }
 
 .btn-light {
-    background: #e0e0e0;
-    color: #121212;
+    background: var(--text-muted);
+    color: var(--bg-color);
     border: none;
 }
 
 .btn-light:hover {
-    background: white;
+    background: var(--text-color);
+    color: var(--bg-color);
 }
 
 /* Bubble Button */
 .bubble-btn {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(247, 247, 248, 0.04);
     color: var(--text-color) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-color);
     border-radius: 999px;
     padding: .25rem .6rem;
     box-shadow: none;
 }
 
 .bubble-btn:hover {
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(200, 204, 210, 0.15);
     transform: translateY(-1px);
 }
 
@@ -82,27 +85,27 @@
 .form-control:focus,
 .form-select:focus {
     background-color: var(--input-bg);
-    color: white;
+    color: var(--text-color);
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.25rem rgba(187, 134, 252, 0.25);
+    box-shadow: 0 0 0 0.2rem rgba(200, 204, 210, 0.2);
 }
 
 .form-label {
-    color: #bb86fc !important;
+    color: var(--text-muted) !important;
     font-weight: 500;
 }
 
 /* --- Alerts --- */
 .alert-info {
-    background-color: rgba(3, 218, 198, 0.1);
-    border-color: var(--secondary-color);
-    color: var(--secondary-color);
+    background-color: rgba(91, 97, 107, 0.15);
+    border-color: var(--muted-color);
+    color: var(--text-muted);
 }
 
 .alert-danger {
-    background-color: rgba(207, 102, 121, 0.1);
-    border-color: var(--accent-color);
-    color: var(--accent-color);
+    background-color: rgba(200, 204, 210, 0.08);
+    border-color: var(--border-color);
+    color: #e07070;
 }
 
 /* --- Modals --- */
@@ -126,27 +129,19 @@
 
 /* --- Typography Utilities --- */
 .gradient-label {
-    background: linear-gradient(45deg, #bb86fc, #03dac6);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent !important;
+    color: var(--text-muted);
     font-weight: 600;
 }
 
 .gradient-accent {
-    background: linear-gradient(90deg, rgba(134, 42, 155, 1) 0%, rgba(92, 192, 242, 1) 50%, rgba(230, 228, 223, 1) 99%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent !important;
+    color: var(--primary-color);
     font-weight: 600;
 }
 
 #semesterGPA,
 #cumulativeGPA {
-    color: #03dac6 !important;
-    text-shadow: 0 0 10px rgba(3, 218, 198, 0.3);
+    color: var(--text-muted) !important;
+    text-shadow: none;
 }
 
 /* --- Dashboard Feature Cards --- */

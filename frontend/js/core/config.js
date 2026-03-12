@@ -1,6 +1,6 @@
 const CONFIG = {
     API_URL: 'https://academic-tracker-api-pujq.onrender.com',
-    APP_NAME: 'GPA Calculator'
+    APP_NAME: 'Academic Tracker'
 };
 
 // Export for Node.js (Environment variables override in backend, but this might be used for tests)

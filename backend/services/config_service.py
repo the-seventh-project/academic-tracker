@@ -13,7 +13,13 @@ def get_assessment_types() -> list:
 
 def get_semesters() -> list:
     """
-    Get available semesters (Mock implementation for now, or DB backed later).
+    Get available semesters grouped by year.
+    To add a new year, append a new entry to SEMESTER_YEARS.
     """
-    # Ideally this would also be in DB, but for now we centralize it here.
-    return ["Spring 2025", "Summer 2025", "Fall 2025", "Winter 2025"]
+    SEMESTER_YEARS = [2026, 2025]
+    SEMESTER_TERMS = ["Spring", "Summer", "Fall"]
+    result = []
+    for year in SEMESTER_YEARS:
+        for term in SEMESTER_TERMS:
+            result.append(f"{term} {year}")
+    return result

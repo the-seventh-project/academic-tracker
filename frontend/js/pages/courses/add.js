@@ -47,15 +47,15 @@ document.getElementById('addCourseForm')?.addEventListener('submit', async (e) =
         const data = await window.API.post('/api/add-course', courseData);
 
         if (data.success) {
-            showSuccess('Course added successfully!');
+            showSuccess('Course added successfully! Redirecting...');
             setTimeout(() => {
                 window.location.href = '../dashboard/student.html';
             }, 1500);
         } else {
-            showError('Failed to add course');
+            showError(data.error || 'Failed to add course. Please try again.');
         }
     } catch (error) {
-        showError('Cannot connect to server');
+        showError('Could not reach the server. Please check your connection and try again.');
     }
 });
 

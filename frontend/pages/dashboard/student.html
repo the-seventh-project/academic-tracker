@@ -15,7 +15,7 @@
     <!-- Navigation Bar -->
     <nav class="navbar navbar-dark bg-primary">
         <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">📊 GPA Calculator</span>
+            <span class="navbar-brand mb-0 h1">📊 Academic Tracker</span>
             <div class="d-flex align-items-center">
                 <span class="navbar-text text-white me-3" id="studentName"></span>
                 <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
@@ -41,7 +41,7 @@
                 <div class="card shadow">
                     <div class="card-body text-center">
                         <h5 class="card-title">Semester GPA</h5>
-                        <h1 class="display-3" style="color: #2dd4bf;" id="semesterGPA">0.00</h1>
+                        <h1 class="display-3" id="semesterGPA">0.00</h1>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                 <div class="card shadow">
                     <div class="card-body text-center">
                         <h5 class="card-title">Cumulative GPA</h5>
-                        <h1 class="display-3" style="color: #2dd4bf;" id="cumulativeGPA">0.00</h1>
+                        <h1 class="display-3" id="cumulativeGPA">0.00</h1>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="card shadow">
                     <div class="card-body text-center">
                         <h5 class="card-title">Total Credits</h5>
-                        <h1 class="display-3" style="color: #2dd4bf;" id="totalCredits">-</h1>
+                        <h1 class="display-3" id="totalCredits">-</h1>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <div class="card shadow">
                     <div class="card-body text-center">
                         <h5 class="card-title">Semester</h5>
-                        <h1 class="display-3" style="color: #2dd4bf;" id="currentSemester">Fall</h1>
+                        <h1 class="display-3" id="currentSemester">Fall</h1>
                     </div>
                 </div>
             </div>
@@ -142,8 +142,8 @@
                 </a>
             </div>
             <div class="col-md-6">
-                <a href="../tools/grade-forecast.html" class="btn btn-lg w-100 py-3"
-                    style="font-weight: 600; background: linear-gradient(135deg, #9c3802 0%, #ffb444 100%); border: none; color: white;">
+                <a href="../tools/grade-forecast.html" class="btn btn-primary btn-lg w-100 py-3"
+                    style="font-weight: 600;">
                     📈 Course Forecast
                 </a>
             </div>
@@ -162,7 +162,7 @@
     <!-- Page Specific Script -->
     <script src="../../js/pages/dashboard/student.js"></script>
     <footer style="margin-top: 50px;" class="text-center">
-        &copy; 2025 GPA Calculator | Student Dashboard
+        &copy; 2025 Academic Tracker | Student Dashboard
     </footer>
 </body>
 
