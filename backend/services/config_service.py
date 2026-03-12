@@ -2,6 +2,7 @@
 # Handles retrieval of system configuration and static data
 from backend.database import query_db
 
+
 def get_assessment_types() -> list:
     """
     Get all assessment types (Assignment, Quiz, etc.) with defaults.
@@ -10,6 +11,7 @@ def get_assessment_types() -> list:
     if not types:
         return []
     return [dict(row) for row in types]
+
 
 def get_semesters() -> list:
     """

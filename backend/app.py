@@ -1,3 +1,6 @@
+from backend.create_database import create_database
+from backend.config import config
+from backend.routes import register_blueprints
 import os
 import sys
 import logging
@@ -17,9 +20,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-from backend.routes import register_blueprints
-from backend.config import config
-from backend.create_database import create_database
 
 # Initialize database tables on startup
 logger.info("Verifying database schema...")

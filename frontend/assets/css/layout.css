@@ -49,8 +49,60 @@ footer {
     font-size: 0.85rem;
 }
 
-/* Override Bootstrap bg classes to use our palette */\nbg-primary,\n.bg-primary {\n    background-color: var(--primary-color) !important;\n}\n\n.navbar-dark .navbar-brand,\n.navbar-dark .navbar-text,\n.navbar-dark .navbar-toggler-icon,\n.navbar-dark .nav-link {\n    color: var(--text-color) !important;\n}\n\n/* Responsive */
+/* Override Bootstrap bg/color utility classes */
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.bg-secondary {
+    background-color: var(--muted-color) !important;
+}
+
+.bg-success {
+    background-color: var(--primary-color) !important;
+}
+
+.bg-dark {
+    background-color: var(--secondary-color) !important;
+}
+
+/* Bootstrap text utilities — map to our monochrome palette */
+.text-primary {
+    color: var(--text-color) !important;
+}
+
+.text-success {
+    color: var(--primary-color) !important;
+}
+
+.text-info {
+    color: var(--muted-color) !important;
+}
+
+.text-warning {
+    color: var(--text-color) !important;
+}
+
+/* Fix focus accent color on form controls */
+:root {
+    --bs-focus-ring-color: rgba(42, 46, 53, 0.25);
+}
+
+* {
+    accent-color: var(--primary-color);
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .navbar-text,
+.navbar-dark .navbar-toggler-icon,
+.navbar-dark .nav-link {
+    color: var(--text-color) !important;
+}
+
+
+/* Responsive */
 @media (max-width: 768px) {
+
     .row.justify-content-center .col-md-5,
     .col-md-5 {
         flex: 0 0 100%;
