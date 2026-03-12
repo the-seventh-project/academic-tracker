@@ -76,14 +76,16 @@ def execute_db(query, args=()):
     conn = get_db_connection()
     try:
         formatted_query = format_query(query, conn)
-        cursor = get_cursor(conn)
+        # Use a plain cursor (not RealDictCursor) so we can index fetchone() by position
+        cursor = conn.cursor()
         cursor.execute(formatted_query, args)
         conn.commit()
         # Handle lastrowid for PostgreSQL
         if not isinstance(conn, sqlite3.Connection):
-            # PostgreSQL: Try to fetch returned ID if available (needs RETURNING clause in SQL)
+            # PostgreSQL: fetch the ID returned by a RETURNING clause
             if cursor.description:
-                last_id = cursor.fetchone()[0]
+                row = cursor.fetchone()
+                last_id = row[0] if row else None
             else:
                 last_id = None
         else:
