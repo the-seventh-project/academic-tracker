@@ -1,5 +1,8 @@
 const CONFIG = {
-    API_URL: 'https://academic-tracker-api-pujq.onrender.com',
+    // Use local backend for development; change to Render URL before deploying
+    API_URL: window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost'
+        ? 'http://127.0.0.1:5000'
+        : 'https://academic-tracker-api-pujq.onrender.com',
     APP_NAME: 'Academic Tracker'
 };
 

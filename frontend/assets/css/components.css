@@ -292,14 +292,14 @@ input:checked+.slider:before {
 /* Fix: Orange Hover Button */
 .btn-course-forecast {
     font-weight: 600;
-    background: linear-gradient(135deg, #9c3802 0%, #ffb444 100%);
-    border: none;
-    color: white;
-    transition: all 0.3s ease;
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #F7F7F8;
+    transition: background-color 0.15s, border-color 0.15s;
 }
 
 .btn-course-forecast:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
-    color: white;
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #F7F7F8;
 }

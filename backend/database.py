@@ -27,6 +27,10 @@ def sanitize_db_uri(uri):
         
     return uri.strip()
 
+def is_postgres():
+    """Returns True if the configured database is PostgreSQL."""
+    return not sanitize_db_uri(config.SQLALCHEMY_DATABASE_URI).startswith('sqlite')
+
 def get_db_connection():
     """Get a database connection based on the configuration."""
     db_uri = sanitize_db_uri(config.SQLALCHEMY_DATABASE_URI)
@@ -79,15 +83,15 @@ def execute_db(query, args=()):
         cursor = get_cursor(conn)
         cursor.execute(formatted_query, args)
         conn.commit()
-        # Handle lastrowid for PostgreSQL
-        if not isinstance(conn, sqlite3.Connection):
-            # PostgreSQL: Try to fetch returned ID if available (needs RETURNING clause in SQL)
+        if isinstance(conn, sqlite3.Connection):
+            last_id = cursor.lastrowid
+        else:
+            # PostgreSQL: fetch RETURNING result if query included it
             if cursor.description:
-                last_id = cursor.fetchone()[0]
+                row = cursor.fetchone()
+                last_id = list(row.values())[0] if row else None
             else:
                 last_id = None
-        else:
-            last_id = cursor.lastrowid
         return last_id
     finally:
         conn.close()

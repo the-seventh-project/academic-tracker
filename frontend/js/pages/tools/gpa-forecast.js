@@ -40,8 +40,10 @@ async function loadCurrentSummary(userId) {
         // Store for payload
         window.currentSummary = { cumulative_gpa: cumGPA, total_credits: credits };
 
-        // Reset term GPA display
-        document.getElementById('currentTermGPA').textContent = "0.00"; // Start fresh
+        // Current term GPA = most recent semester's GPA from the breakdown
+        const semesters = summary.semesters || [];
+        const currentTermGPA = semesters.length > 0 ? semesters[semesters.length - 1].gpa : 0;
+        document.getElementById('currentTermGPA').textContent = currentTermGPA.toFixed(2);
     } catch (e) {
         console.error('Failed to load summary', e);
     }

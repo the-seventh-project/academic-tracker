@@ -1,6 +1,6 @@
 # Course Routes
 from flask import Blueprint, request, jsonify
-from backend.database import query_db, execute_db
+from backend.database import query_db, execute_db, is_postgres
 
 courses_bp = Blueprint('courses', __name__)
 
@@ -31,25 +31,19 @@ def get_course(course_id):
 @courses_bp.route('/api/add-course', methods=['POST'])
 def add_course():
     """Add a new course"""
-    data = request.json
-
-    sql = '''INSERT INTO "COURSE" (course_code, course_name, credit_hours, semester, student_id)
-             VALUES (?, ?, ?, ?, ?)'''
-    
-    # Check if we are using Postgres (for Render) to add RETURNING
-    from backend.database import get_db_connection
-    conn = get_db_connection()
-    import sqlite3
-    if not isinstance(conn, sqlite3.Connection):
-         sql += ' RETURNING course_id'
-    conn.close()
-
-    course_id = execute_db(
-        sql,
-        (data['course_code'], data['course_name'], data['credit_hours'],
-         data['semester'], data['student_id'])
-    )
-    return jsonify({"success": True, "course_id": course_id})
+    try:
+        data = request.json
+        sql = 'INSERT INTO "COURSE" (course_code, course_name, credit_hours, semester, student_id) VALUES (?, ?, ?, ?, ?)'
+        if is_postgres():
+            sql += ' RETURNING course_id'
+        course_id = execute_db(
+            sql,
+            (data['course_code'], data['course_name'], data['credit_hours'],
+             data['semester'], data['student_id'])
+        )
+        return jsonify({"success": True, "course_id": course_id})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 
 @courses_bp.route('/api/update-course/<int:course_id>', methods=['POST', 'PUT'])
