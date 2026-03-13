@@ -24,7 +24,11 @@ logger = logging.getLogger(__name__)
 
 # Initialize database tables on startup
 logger.info("Verifying database schema...")
-create_database()
+try:
+    create_database()
+    logger.info("Database schema verified successfully.")
+except Exception as e:
+    logger.warning(f"Could not verify database schema on startup: {e}. Tables are assumed to already exist.")
 
 app = Flask(__name__)
 # Fully permissive CORS for all routes (important for production connectivity)
