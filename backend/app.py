@@ -1,18 +1,20 @@
+import os
+import sys
+
+# Fix for Render: Add project root to path BEFORE any backend imports.
+# When Render runs 'gunicorn app:app' from the backend/ directory,
+# 'backend' is not on sys.path. This must happen before the imports below.
+_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if _root not in sys.path:
+    sys.path.insert(0, _root)
+
 from backend.create_database import create_database
 from backend.config import config
 from backend.routes import register_blueprints
-import os
-import sys
 import logging
 import requests
 from flask import Flask, jsonify
 from flask_cors import CORS
-
-# Definitive fix for Render: Add project root to path
-# This ensures 'backend' can be imported as a package
-root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-if root not in sys.path:
-    sys.path.insert(0, root)
 
 # Configure Logging
 logging.basicConfig(
